@@ -6,6 +6,7 @@ function Navbar() {
     <nav>
         <Link to='/'>Home</Link>
         <Link to='/class/new'>Create Class</Link>
+        <Link to='/class'>Class List</Link>
     </nav>
   )
 }

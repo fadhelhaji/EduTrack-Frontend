@@ -13,6 +13,17 @@ async function create(formData){
     }
 }
 
+//Index
+async function index(){
+    try {
+        const response = await axios.get(`${BASE_URL}/class`)
+        return response.data.classes
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export {
-    create
+    create, index
 }
