@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
+import * as classService from '../../services/classService'
 
 function ClassForm() {
     const navigate = useNavigate()
@@ -9,9 +10,10 @@ function ClassForm() {
         schedule: ''
     })
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
-        navigate('/home')
+        const data = await classService.create(formData)
+        navigate('/')
     }
 
     function handleChange(e){
@@ -34,8 +36,9 @@ function ClassForm() {
 
             <label htmlFor="schedule"></label>
             <select name="schedule" value={formData.schedule} onChange={handleChange} required>
+                <option value="">Select schedule</option>
                 <option value="Full-time">Full-time</option>
-                <option value="Part-Time">Part-time</option>
+                <option value="Part-time">Part-time</option>
             </select>
             <button type='submit'>Create Class</button>
         </form>

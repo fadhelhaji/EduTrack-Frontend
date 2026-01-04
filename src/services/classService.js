@@ -3,6 +3,16 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}`
 
 //CREATE CLASS
 async function create(formData){
-    const response = await axios.post(BASE_URL, formData)
-    return response.data
+    try {
+        const response = await axios.post(`${BASE_URL}/class/new`, formData)
+        console.log(response.data.class);
+        
+        return response.data.class
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export {
+    create
 }
