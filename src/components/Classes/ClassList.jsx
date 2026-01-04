@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as classService from '../../services/classService';
+import { Link } from 'react-router';
 
 function ClassList() {
   const [classes, setClasses] = useState([]);
@@ -31,7 +32,7 @@ function ClassList() {
       ) : (
         classes.map((cls) => (
           <div key={cls._id}>
-            <h3>{cls.className}</h3>
+            <h3><Link to={`/class/${cls._id}`}>{cls.className}</Link></h3>
           </div>
         ))
       )}

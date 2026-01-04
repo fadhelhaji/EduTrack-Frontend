@@ -1,19 +1,49 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router'
 import * as classService from '../../services/classService'
 
 function ClassForm() {
+    const {id} = useParams()
     const navigate = useNavigate()
+
+    const isEdit = Boolean(id);
+
     const [formData, setFormData] = useState({
         className: '',
         program: '',
         schedule: ''
     })
 
+    useEffect(() => {
+        if (!isEdit) return;
+
+            async function fetchClass() {
+                try {
+                    const cls = await classService.show(id);
+                    setFormData({
+                    className: cls.className,
+                    program: cls.program,
+                    schedule: cls.schedule
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        fetchClass();
+    }, [id, isEdit]);
+
     async function handleSubmit(e){
         e.preventDefault()
-        const data = await classService.create(formData)
-        navigate('/')
+        try {
+            if (isEdit) {
+                await classService.update(id, formData);
+            } else {
+                await classService.create(formData);
+            }
+        } catch(error){
+            console.log(error);
+        }
+        navigate('/class')
     }
 
     function handleChange(e){
@@ -21,7 +51,7 @@ function ClassForm() {
     }
   return (
     <>
-        <h1>Create a class</h1>
+        <h1>{isEdit ? 'Edit Class' : 'Create a Class'}</h1>
         <form onSubmit={handleSubmit}>
             <label htmlFor="className">Class Name</label>
             <input name='className' id='className' value={formData.className} onChange={handleChange} type="text" />
@@ -40,7 +70,7 @@ function ClassForm() {
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
             </select>
-            <button type='submit'>Create Class</button>
+            <button type="submit">{isEdit ? 'Update Class' : 'Create Class'}</button>
         </form>
     </>
   )

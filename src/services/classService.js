@@ -1,7 +1,7 @@
 import axios from "axios";
 const BASE_URL = `${import.meta.env.VITE_API_URL}`
 
-//CREATE CLASS
+//Create
 async function create(formData){
     try {
         const response = await axios.post(`${BASE_URL}/class/new`, formData)
@@ -21,9 +21,38 @@ async function index(){
     } catch (error) {
         console.log(error);
     }
+}
 
+//Show
+async function show(id) {
+    try {
+        const response = await axios.get(`${BASE_URL}/class/${id}`);
+        return response.data.class
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Update
+async function update(id, formData) {
+    try {
+        const response = await axios.put(`${BASE_URL}/class/${id}/edit`, formData);
+        return response.data.class;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Delete
+async function remove(id) {
+    try {
+        const response = await axios.delete(`${BASE_URL}/class/${id}`);
+        return response.data.class;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export {
-    create, index
+    create, index, show, update, remove
 }
