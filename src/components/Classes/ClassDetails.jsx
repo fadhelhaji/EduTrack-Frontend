@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import * as classService from "../../services/classService";
 
 function ClassDetails() {
@@ -41,6 +41,12 @@ function ClassDetails() {
       <p>Schedule: {cls.schedule}</p>
       {/* <p>Instructor: {cls.instructor?.username || "N/A"}</p>
       <p>Student: {cls.student?.username || "N/A"}</p> */}
+
+      {cls.student.map((one)=>{
+        return (
+          <p>{one.username}</p>
+        )
+      })}
 
       <Link to={`/class/${cls._id}/edit`}><button>Edit Class</button></Link>
       <button onClick={handleDelete}>Delete Class</button>

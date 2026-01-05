@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/auth`
+const BASE_URL = `${import.meta.env.VITE_API_URL}/auth`
 
 async function signUp(formData) {
 

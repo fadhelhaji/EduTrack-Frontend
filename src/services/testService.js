@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/test`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/test`;
 
 async function test() {
   // Step 1: Get the token from localStorage
