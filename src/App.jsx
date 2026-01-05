@@ -18,14 +18,28 @@ function App() {
   return (
     <div>
       <Navbar />
+
       <Routes>
-        <Route path='/' element={user ? <Home /> : <Landing />} />
-        <Route path='/class/new' element={<ClassForm />} />
-        <Route path='/class' element={<ClassList />} />
-        <Route path="/class/:id" element={<ClassDetails />} />
-        <Route path="/class/:id/edit" element={<ClassForm />} />
-        <Route path='/auth/sign-up' element={<SignUpForm />} />
-        <Route path='/auth/sign-in' element={<SignInForm />} />
+        <Route path="/" element={user ? <Home /> : <Landing />} />
+
+        <Route path="/auth/sign-up" element={<SignUpForm />} />
+        <Route path="/auth/sign-in" element={<SignInForm />} />
+
+        {/* {user?.role ==='Student' && (
+          <>
+          
+          </>
+        )} */}
+
+        {user?.role === "Instructor" && (
+          <>
+            <Route path="/class" element={<ClassList />} />
+            <Route path="/class/:id" element={<ClassDetails />} />
+            <Route path="/class/new" element={<ClassForm />} />
+            <Route path="/class/:id/edit" element={<ClassForm />} />
+          </>
+        )}
+
       </Routes>
     </div>
   )

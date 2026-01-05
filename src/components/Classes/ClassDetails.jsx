@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams } from "react-router";
 import * as classService from "../../services/classService";
 
 function ClassDetails() {
-    const { id } = useParams();
-    const navigate = useNavigate()
-    const [cls, setCls] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [cls, setCls] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchClass() {
@@ -22,7 +22,7 @@ function ClassDetails() {
     fetchClass();
   }, [id]);
 
-    async function handleDelete() {
+  const handleDelete = async () => {
     try {
       await classService.remove(cls._id);
       navigate("/class");
@@ -39,16 +39,20 @@ function ClassDetails() {
       <h1>{cls.className}</h1>
       <p>Program: {cls.program}</p>
       <p>Schedule: {cls.schedule}</p>
-      {/* <p>Instructor: {cls.instructor?.username || "N/A"}</p>
-      <p>Student: {cls.student?.username || "N/A"}</p> */}
+      <p>Instructor: {cls.instructor?.username || "N/A"}</p>
 
-      {cls.student.map((one)=>{
-        return (
-          <p>{one.username}</p>
-        )
-      })}
+      <h3>Students:</h3>
+      {cls.students && cls.students.length > 0 ? (
+        cls.students.map((student) => (
+          <p key={student._id}>{student.username}</p>
+        ))
+      ) : (
+        <p>No students enrolled yet</p>
+      )}
 
-      <Link to={`/class/${cls._id}/edit`}><button>Edit Class</button></Link>
+      <Link to={`/class/${cls._id}/edit`}>
+        <button>Edit Class</button>
+      </Link>
       <button onClick={handleDelete}>Delete Class</button>
     </div>
   );

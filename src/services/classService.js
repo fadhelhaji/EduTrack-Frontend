@@ -4,14 +4,23 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}`
 //Create
 async function create(formData){
     try {
-        const response = await axios.post(`${BASE_URL}/class/new`, formData)
+        const token = localStorage.getItem("token"); // get JWT from localStorage
+        const response = await axios.post(
+            `${BASE_URL}/class/new`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`  // <-- send token in header
+                }
+            }
+        );
         console.log(response.data.class);
-        
-        return response.data.class
+        return response.data.class;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
+
 
 //Index
 async function index(){
@@ -54,5 +63,5 @@ async function remove(id) {
 }
 
 export {
-    create, index, show, update, remove
-}
+    create, index, remove, show, update
+};
