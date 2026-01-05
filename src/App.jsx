@@ -1,10 +1,10 @@
-import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Home from './components/Home/Home'
-import {Routes, Route} from 'react-router'
+import { Route, Routes } from 'react-router'
+import ClassDetails from './components/Classes/ClassDetails'
 import ClassForm from './components/Classes/ClassForm'
 import ClassList from './components/Classes/ClassList'
-import ClassDetails from './components/Classes/ClassDetails'
+import Home from './components/Home/Home'
+import Navbar from './components/Navbar/Navbar'
+import SignUpForm from './components/User/SignUp/SignUpForm'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path='/class' element={<ClassList />} />
         <Route path="/class/:id" element={<ClassDetails />} />
         <Route path="/class/:id/edit" element={<ClassForm />} />
+        <Route path='/sign-up' element={<SignUpForm />} />
       </Routes>
     </div>
   )
