@@ -1,32 +1,42 @@
 import { useContext } from "react";
 import { Link } from "react-router";
-import { UserContext } from "../Contexts/UserContext";
+import { UserContext } from "../../components/Contexts/UserContext"; // adjust path if needed
 
-function Navbar() {
+const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
 
-  const signOut = () => {
-    setUser(null);
+  const handleSignOut = () => {
     localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
     <nav>
-      {/* Always visible links */}
-      <Link to="/">Home</Link>
-      <Link to="/class">Class List</Link>
+      <ul>
+        {/* Always visible links */}
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/class">Class List</Link></li>
 
-      {user ? (
-        <>
-          <Link to="/class/new">Create Class</Link>
-          <span>Welcome, {user.username}</span>
-          <button onClick={signOut}>Sign Out</button>
-        </>
-      ) : (
-        <Link to="/sign-up">Sign Up</Link>
-      )}
+        {user ? (
+          <>
+            <li><Link to="/">Dashboard</Link></li>
+            <li><Link to="/class/new">Create Class</Link></li>
+            <li>Welcome, {user.username}</li>
+            <li>
+              <Link to="/" onClick={handleSignOut}>
+                Sign Out
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li><Link to="/auth/sign-in">Sign In</Link></li>
+            <li><Link to="/auth/sign-up">Sign Up</Link></li>
+          </>
+        )}
+      </ul>
     </nav>
   );
-}
+};
 
 export default Navbar;
