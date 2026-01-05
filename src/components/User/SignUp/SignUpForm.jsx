@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import * as authService from '../../../services/authService';
+import * as authService from "../../../services/authService";
 import { UserContext } from "../../Contexts/UserContext";
 
 function SignUpForm() {
@@ -8,12 +8,14 @@ function SignUpForm() {
 
   const [users, setUsers] = useState([]);
 
-    const {setUser} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
+    role: "",
+    employeeId: "",
   });
 
   function handleChange(event) {
@@ -27,8 +29,8 @@ function SignUpForm() {
     event.preventDefault();
 
     try {
-      const user = await authService.signUp(formData)
-      setUser(user)
+      const user = await authService.signUp(formData);
+      setUser(user);
       navigate("/home");
     } catch (error) {
       console.error("Signup failed:", error);
@@ -43,6 +45,31 @@ function SignUpForm() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Role</option>
+          <option value="Instructor">Instructor</option>
+          <option value="Student">Student</option>
+        </select>
+
+        {formData.role === "Instructor" && (
+          <>
+            <label htmlFor="employeeId">Employee ID</label>
+            <input
+              type="text"
+              id="employeeId"
+              name="employeeId"
+              value={formData.employeeId}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
+
         <label htmlFor="username">Username</label>
         <input
           value={formData.username}
@@ -73,7 +100,9 @@ function SignUpForm() {
           required
         />
 
-        <button disabled={isFormInvalid()} type="submit">Create Account</button>
+        <button disabled={isFormInvalid()} type="submit">
+          Create Account
+        </button>
       </form>
     </div>
   );
