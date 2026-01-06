@@ -4,36 +4,41 @@ import { Link } from 'react-router';
 
 
 function AssignmentList(){
-const [assignment, setAssignment] = useState([]);
+const [assignments, setAssignments] = useState([]);
 const [loading, setLoading] = useState(true);
 
 useEffect(()=>{
-    async function fetchAssignment(){
+    async function fetchAssignments(){
         try {
             const data = await assignmentService.index();
-            setAssignment(data);
+            setAssignments(data || []);
         } catch (error) {
-            console.log(error);
+            console.log("Error fetching assignments:", error);
         }
         finally {
         setLoading(false);
       }
     }
-    fetchAssignment();
+    fetchAssignments();
 },[])
 
   if (loading) return <p>Loading...</p>;
 
 return (
     <div>
-      <h1>Assignment</h1>
+      <h1>All Assignment</h1>
 
-      {assignment.length === 0 ? (
-        <p>No classes found</p>
+      {assignments.length === 0 ? (
+        <p>No Assignments found</p>
       ) : (
-        assignment.map((oneAssignment) => (
-          <div key={oneAssignment._id}>
-            <h3><Link to={`/assignment/${oneAssignment._id}`}>{oneAssignment.title}</Link></h3>
+        assignments.map((assignment) => (
+          <div key={assignment._id}>
+            <h3>
+            <Link to={`/assignment/${assignment._id}`}>
+            {assignment.title}
+            </Link>
+            </h3>
+            <p>Class: {assignment.class?.className || "N/A"}</p>
           </div>
         ))
       )}
