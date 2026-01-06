@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import * as classService from "../../services/classService";
-import * as studentService from "../../services/studentService";
 
 
 
@@ -11,24 +10,27 @@ function ClassDetails() {
   const [cls, setCls] = useState(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState([])
-  useEffect(()=>{
-    async function fetchStudents() {
-      try {
-        const data = await studentService.index()
-        console.log(data)
-        setStudent(data.student)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchStudents()
-  }, []);
+  const [assignment, setAssignment] = useState([])
+  // useEffect(()=>{
+  //   async function fetchStudents() {
+  //     try {
+  //       const data = await studentService.index()
+  //       console.log(data)
+  //       setStudent(data.student)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchStudents()
+  // }, []);
 
   useEffect(() => {
     async function fetchClass() {
       try {
         const data = await classService.show(id);
-        setCls(data);
+        // console.log(data)
+        setCls(data.class);
+        setAssignment(data.assignments);
       } catch (error) {
         console.log(error);
       } finally {
@@ -57,14 +59,24 @@ function ClassDetails() {
       <p>Schedule: {cls.schedule}</p>
       <p>Instructor: {cls.instructor?.username || "N/A"}</p>
 
+      <h3>Assignment</h3>
+      {assignment.map((one)=>{
+        return (
+          <>
+          <h2>{one.title}</h2> 
+          <p>{one.description}</p>
+          </>
+        )
+      })}
+
       <h3>Students:</h3>
-      {cls.students && cls.students.length > 0 ? (
+      {/* {cls.students && cls.students.length > 0 ? (
         cls.students.map((student) => (
           <p key={student._id}>{student.username}</p>
         ))
       ) : (
         <p>No students enrolled yet</p>
-      )}
+      )} */}
 
       <Link to={`/class/${cls._id}/edit`}>
         <button>Edit Class</button>
