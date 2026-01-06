@@ -12,6 +12,8 @@ function SignUpForm() {
 
   const [formData, setFormData] = useState({
     username: "",
+    firstName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
     role: "",
@@ -79,6 +81,27 @@ function SignUpForm() {
           type="text"
           required
         />
+
+        <label htmlFor="firstName">First Name</label>
+        <input
+          value={formData.firstName}
+          onChange={handleChange}
+          name="firstName"
+          id="firstName"
+          type="text"
+          required
+        />
+
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          value={formData.lastName}
+          onChange={handleChange}
+          name="lastName"
+          id="lastName"
+          type="text"
+          required
+        />
+
 
         <label htmlFor="password">Password</label>
         <input

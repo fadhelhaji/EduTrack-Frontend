@@ -1,12 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import * as classService from "../../services/classService";
+import * as studentService from "../../services/studentService";
+
+
 
 function ClassDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [cls, setCls] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [student, setStudent] = useState([])
+  useEffect(()=>{
+    async function fetchStudents() {
+      try {
+        const data = await studentService.index()
+        console.log(data)
+        setStudent(data.student)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchStudents()
+  }, []);
 
   useEffect(() => {
     async function fetchClass() {
