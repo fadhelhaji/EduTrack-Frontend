@@ -10,7 +10,6 @@ function ClassDetails() {
   const [cls, setCls] = useState(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState([])
-  const [assignment, setAssignment] = useState([])
   // useEffect(()=>{
   //   async function fetchStudents() {
   //     try {
@@ -28,9 +27,8 @@ function ClassDetails() {
     async function fetchClass() {
       try {
         const data = await classService.show(id);
-        // console.log(data)
         setCls(data.class);
-        setAssignment(data.assignments);
+        console.log(data.class)
       } catch (error) {
         console.log(error);
       } finally {
@@ -60,14 +58,24 @@ function ClassDetails() {
       <p>Instructor: {cls.instructor?.username || "N/A"}</p>
 
       <h3>Assignment</h3>
-      {assignment.map((one)=>{
-        return (
-          <>
-          <h2>{one.title}</h2> 
-          <p>{one.description}</p>
-          </>
-        )
-      })}
+      {cls.assignment && cls.assignment.length > 0 ? (
+      <ul>
+        {cls.assignment.map((a) => (
+          <li key={a._id}>
+            <h4>{a.title}</h4>
+            <p>{a.description}</p>
+            <p>
+              Deadline: { (a.deadline)}
+            </p>
+            <p>Total Grade: {a.totalGrade}</p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No assignments yet</p>
+    )}
+
+
 
       <h3>Students:</h3>
       {/* {cls.students && cls.students.length > 0 ? (
