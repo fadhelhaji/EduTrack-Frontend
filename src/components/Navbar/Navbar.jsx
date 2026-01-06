@@ -25,6 +25,9 @@ const Navbar = () => {
             <li>
               <Link to="/class/new">Create Class</Link>
             </li>
+            <li>
+              <Link to="/assignment/new">Create Assignment</Link>
+            </li>
           </>
         )}
 
