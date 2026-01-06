@@ -25,7 +25,7 @@ async function create(assignment){
 async function index(){
     try {
         const response = await axios.get(`${BASE_URL}/assignment`)
-        return response.data.assignment
+        return response.data.assignments
     } catch (error) {
         console.log(error);
     }
@@ -34,7 +34,7 @@ async function index(){
 async function show(id) {
     try {
         const response = await axios.get(`${BASE_URL}/assignment/${id}`);
-        return response.data.assignment
+        return response.data.assignments
     } catch (error) {
         console.log(error);
     }
@@ -44,7 +44,7 @@ async function show(id) {
 async function update(id, assignment) {
     try {
         const response = await axios.put(`${BASE_URL}/assignment/${id}/edit`, assignment);
-        return response.data.assignment;
+        return response.data.assignments;
     } catch (error) {
         console.log(error);
     }
@@ -54,7 +54,7 @@ async function update(id, assignment) {
 async function remove(id) {
     try {
         const response = await axios.delete(`${BASE_URL}/assignment/${id}`);
-        return response.data.assignment;
+        return response.data.assignments;
     } catch (error) {
         console.log(error);
     }
