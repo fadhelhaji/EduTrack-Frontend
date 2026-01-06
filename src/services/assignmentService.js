@@ -14,10 +14,23 @@ async function create(assignment){
                 }
             }
         );
-        console.log(response.data.assignment);
+        // console.log(response.data.assignment);
         return response.data.assignment;
     } catch(error){
         console.log(error)
+    }
+}
+
+//submissions
+const getSubmission = async (assignmentId) =>{
+    try {
+        const response = await axios.get(`${BASE_URL}/assignment/${assignmentId}/submissions`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    return response.data;
+    }
+     catch (err) {
+    console.log(err);
     }
 }
 
@@ -31,10 +44,11 @@ async function index(){
     }
 }
 
+//Show 
 async function show(id) {
     try {
         const response = await axios.get(`${BASE_URL}/assignment/${id}`);
-        return response.data.assignments
+        return response.data.assignment
     } catch (error) {
         console.log(error);
     }
@@ -44,7 +58,7 @@ async function show(id) {
 async function update(id, assignment) {
     try {
         const response = await axios.put(`${BASE_URL}/assignment/${id}/edit`, assignment);
-        return response.data.assignments;
+        return response.data.assignment;
     } catch (error) {
         console.log(error);
     }
@@ -54,7 +68,7 @@ async function update(id, assignment) {
 async function remove(id) {
     try {
         const response = await axios.delete(`${BASE_URL}/assignment/${id}`);
-        return response.data.assignments;
+        return response.data.assignment;
     } catch (error) {
         console.log(error);
     }
@@ -62,5 +76,5 @@ async function remove(id) {
 
 
 export {
-    create, index, show, update, remove 
+    create, index, show, update, remove, getSubmission 
 };
