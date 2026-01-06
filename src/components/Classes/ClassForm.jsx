@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import * as classService from '../../services/classService'
 
@@ -48,6 +48,7 @@ function ClassForm() {
 
     function handleChange(e){
         setFormData({...formData, [e.target.name] : e.target.value})
+        console.log(formData)
     }
   return (
     <>
