@@ -38,7 +38,6 @@ return (
             {assignment.title}
             </Link>
             </h3>
-            <p>Class: {assignment.class?.className || "N/A"}</p>
           </div>
         ))
       )}
