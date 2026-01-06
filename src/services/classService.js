@@ -63,16 +63,7 @@ async function remove(id) {
     }
 }
 
-async function indexAssignment(id){
-    try {
-        const response = await axios.get(`${BASE_URL}/class/${id}`)
-        console.log(response.data.assignments)
-        return 
-    } catch (error) {
-       console.log(error) 
-    }
-}
 export {
-    create, index, indexAssignment, remove, show, update
+    create, index, remove, show, update
 };
 
