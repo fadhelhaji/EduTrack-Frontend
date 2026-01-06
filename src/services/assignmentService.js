@@ -1,5 +1,5 @@
-const BASE_URL = `${import.meta.env.VITE_API_URL}`
 import axios from "axios";
+const BASE_URL = `${import.meta.env.VITE_API_URL}`
 
 //Create
 async function create(assignment){
@@ -21,6 +21,46 @@ async function create(assignment){
     }
 }
 
+//Index
+async function index(){
+    try {
+        const response = await axios.get(`${BASE_URL}/assignment`)
+        return response.data.assignment
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function show(id) {
+    try {
+        const response = await axios.get(`${BASE_URL}/assignment/${id}`);
+        return response.data.assignment
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Update
+async function update(id, assignment) {
+    try {
+        const response = await axios.put(`${BASE_URL}/assignment/${id}/edit`, assignment);
+        return response.data.assignment;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Delete
+async function remove(id) {
+    try {
+        const response = await axios.delete(`${BASE_URL}/assignment/${id}`);
+        return response.data.assignment;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export {
-    create
+    create, index, show, update, remove 
 };

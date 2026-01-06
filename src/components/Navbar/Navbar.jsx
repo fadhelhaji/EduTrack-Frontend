@@ -28,6 +28,9 @@ const Navbar = () => {
             <li>
               <Link to="/assignment/new">Create Assignment</Link>
             </li>
+            <li>
+               <Link to="/assignment"> My Assignment</Link>
+            </li>
           </>
         )}
 

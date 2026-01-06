@@ -11,6 +11,7 @@ import SignUpForm from './components/User/SignUp/SignUpForm'
 import { useContext } from 'react'
 
 import AssignmentForm from './components/Assignment/AssignmentForm'
+import AssignmentList from './components/Assignment/AssignmentList'
 import { UserContext } from './components/Contexts/UserContext'
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/class/new" element={<ClassForm />} />
             <Route path="/class/:id/edit" element={<ClassForm />} />
             <Route path='/assignment/new' element={<AssignmentForm />} />
+            <Route path='/assignment' element={<AssignmentList />} />
           </>
         )}
 
