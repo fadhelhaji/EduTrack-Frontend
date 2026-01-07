@@ -21,19 +21,6 @@ function ClassDetails() {
     deadline: '',
     totalGrade: '',
   })
-  // useEffect(()=>{
-  //   async function fetchStudents() {
-  //     try {
-  //       const data = await studentService.index()
-  //       console.log(data)
-  //       setStudent(data.student)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchStudents()
-  // }, []);
-
 
   async function refreshClass() {
   try {
@@ -48,6 +35,8 @@ function ClassDetails() {
     setLoading(false)
   }
 }
+console.log("Class Students:", classStudents);
+
 
 
 useEffect(() => {
@@ -140,17 +129,6 @@ async function handleRemoveStudent(studentId) {
     ) : (
       <p>No students enrolled yet</p>
     )}
-
-
-      {/* {students && students.length > 0 ? (
-        students.map((student) => (
-          <p key={student._id}>{student.username}</p>
-        ))
-      ) : (
-        <p>No students enrolled yet</p>
-      )} */}
-
-
       <Link to={`/class/${cls._id}/edit`}>
         <button>Edit Class</button>
       </Link>
