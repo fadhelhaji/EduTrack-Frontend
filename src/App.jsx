@@ -43,6 +43,8 @@ function App() {
             <Route path='/assignment/new' element={<AssignmentForm />} />
             <Route path='/assignment' element={<AssignmentList />} />
             <Route path="/assignment/:id" element={<AssignmentDetails />} />
+            <Route path="/assignment/:id/edit" element={<AssignmentForm />} />
+
           </>
         )}
 
