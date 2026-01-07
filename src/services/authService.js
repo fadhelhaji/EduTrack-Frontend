@@ -51,4 +51,16 @@ async function signIn(formData) {
   return user;
 }
 
-export { signIn, signUp };
+async function index(){
+  try {
+    console.log('fad')
+    const response = await axios.get(`${BASE_URL}/students`)
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { index, signIn, signUp };
+

@@ -21,6 +21,26 @@ async function create(formData){
     }
 }
 
+//create assignment
+async function createAssignment(assignment, id){
+    try {
+        const token = localStorage.getItem("token"); // get JWT from localStorage
+        const response = await axios.post(
+            `${BASE_URL}/class/${id}/assignment/new`,
+            assignment,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`  // <-- send token in header
+                }
+            }
+        );
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 //Index
 async function index(){
@@ -64,6 +84,6 @@ async function remove(id) {
 }
 
 export {
-    create, index, remove, show, update
+    create, createAssignment, index, remove, show, update
 };
 

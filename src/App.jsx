@@ -10,10 +10,11 @@ import SignUpForm from './components/User/SignUp/SignUpForm'
 
 import { useContext } from 'react'
 
+import AssignmentDetails from './components/Assignment/AssignmentDetails'
 import AssignmentForm from './components/Assignment/AssignmentForm'
 import AssignmentList from './components/Assignment/AssignmentList'
-import AssignmentDetails from './components/Assignment/AssignmentDetails'
 import { UserContext } from './components/Contexts/UserContext'
+import StudentList from './components/Students/StudentList'
 
 
 function App() {
@@ -44,7 +45,8 @@ function App() {
             <Route path='/assignment' element={<AssignmentList />} />
             <Route path="/assignment/:id" element={<AssignmentDetails />} />
             <Route path="/assignment/:id/edit" element={<AssignmentForm />} />
-
+            <Route path="/class/:id/assignment/new" element={<AssignmentForm />} />
+            <Route path='/auth/students' element={<StudentList />} />
           </>
         )}
 
