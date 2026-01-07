@@ -71,5 +71,16 @@ async function show(id){
   }
 }
 
-export { index, show, signIn, signUp };
+async function update(id, formData) {
+  try {
+    const response = await axios.put(`${BASE_URL}/students/${id}/edit`, formData);
+    console.log('response')
+    return response.data.student;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export { index, show, signIn, signUp, update };
 

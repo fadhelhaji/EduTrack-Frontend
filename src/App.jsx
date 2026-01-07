@@ -20,6 +20,7 @@ import SubmissionDetails from "./components/Submission/SubmissionsDetails"
 
 import { UserContext } from './components/Contexts/UserContext'
 import StudentDetails from './components/Students/StudentDetails'
+import StudentForm from './components/Students/StudentForm'
 import StudentList from './components/Students/StudentList'
 
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/class/:id/assignment/new" element={<AssignmentForm />} />
             <Route path='/auth/students' element={<StudentList />} />
             <Route path='/auth/students/:id' element={<StudentDetails />} />
+            <Route path="/auth/students/:id/edit" element={<StudentForm />} />
             <Route path="/submissions" element={<SubmissionList />} />
             <Route path="/submission/:id" element={<SubmissionDetails />} />
 
