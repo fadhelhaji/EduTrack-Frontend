@@ -5,7 +5,7 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}/auth`
 async function signUp(formData) {
 
   // Step 1: Send POST request with form data
-  const response = await axios.post(`${BASE_URL}/sign-up`, formData);
+  const response = await axios.post(`${BASE_URL}/sign-up`,formData);
 
   // Step 2: Get the data from the response
   const data = response.data;
