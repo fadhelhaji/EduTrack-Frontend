@@ -51,4 +51,36 @@ async function signIn(formData) {
   return user;
 }
 
-export { signIn, signUp };
+async function index(){
+  try {
+    console.log('fad')
+    const response = await axios.get(`${BASE_URL}/students`)
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function show(id){
+  try {
+    const response = await axios.get(`${BASE_URL}/students/${id}`)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function update(id, formData) {
+  try {
+    const response = await axios.put(`${BASE_URL}/students/${id}/edit`, formData);
+    console.log('response')
+    return response.data.student;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export { index, show, signIn, signUp, update };
+

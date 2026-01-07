@@ -14,19 +14,14 @@ function AssignmentForm() {
         description: '',
         deadline: '',
         totalGrade: '',
-        // class: ''
+        class: ''
     })
 
     async function handleSubmit(e){
         e.preventDefault()
         try {
-           if (id){
-            await assignmentService.update(id, assignment);
-            navigate(`/assignment/${id}`);
-            } else {
-              await assignmentService.create(assignment);
+              await classService.createAssignment(assignment);
               navigate('/assignment')
-           }
         } catch (error) {
             console.log(error)
         }

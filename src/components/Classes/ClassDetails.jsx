@@ -9,7 +9,14 @@ function ClassDetails() {
   const navigate = useNavigate();
   const [cls, setCls] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [student, setStudent] = useState([])
+  const [students, setStudents] = useState([])
+  const [assignment, setAssignment] = useState([])
+  const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        deadline: '',
+        totalGrade: '',
+  })
   // useEffect(()=>{
   //   async function fetchStudents() {
   //     try {
@@ -28,6 +35,8 @@ function ClassDetails() {
       try {
         const data = await classService.show(id);
         setCls(data.class);
+        setAssignment(data.assignment)
+        setStudents(data.student)
         console.log(data.class)
       } catch (error) {
         console.log(error);
@@ -58,9 +67,9 @@ function ClassDetails() {
       <p>Instructor: {cls.instructor?.username || "N/A"}</p>
 
       <h3>Assignment</h3>
-      {cls.assignment && cls.assignment.length > 0 ? (
+      {assignment && assignment.length > 0 ? (
       <ul>
-        {cls.assignment.map((a) => (
+        {assignment.map((a) => (
           <li key={a._id}>
             <h4>{a.title}</h4>
             <p>{a.description}</p>
@@ -74,17 +83,20 @@ function ClassDetails() {
     ) : (
       <p>No assignments yet</p>
     )}
+    <Link to={`/class/${id}/assignment/new`}>
+      <button>Create Assignment</button>
+    </Link>
 
 
 
       <h3>Students:</h3>
-      {/* {cls.students && cls.students.length > 0 ? (
-        cls.students.map((student) => (
+      {students && students.length > 0 ? (
+        students.map((student) => (
           <p key={student._id}>{student.username}</p>
         ))
       ) : (
         <p>No students enrolled yet</p>
-      )} */}
+      )}
 
       <Link to={`/class/${cls._id}/edit`}>
         <button>Edit Class</button>

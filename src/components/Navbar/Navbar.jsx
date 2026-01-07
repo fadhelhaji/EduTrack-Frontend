@@ -17,6 +17,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
 
+        {/* Instructor Links */}
         {user?.role === "Instructor" && (
           <>
             <li>
@@ -26,10 +27,10 @@ const Navbar = () => {
               <Link to="/class/new">Create Class</Link>
             </li>
             <li>
-              <Link to="/assignment/new">Create Assignment</Link>
+              <Link to="/assignment">My Assignments</Link>
             </li>
             <li>
-               <Link to="/assignment"> My Assignments</Link>
+              <Link to="/assignment/new">Create Assignment</Link>
             </li>
             <li>
               <Link to="/submissions">All Submissions</Link>
@@ -37,6 +38,19 @@ const Navbar = () => {
           </>
         )}
 
+        {/* Student Links */}
+        {user?.role === "Student" && (
+          <>
+            <li>
+              <Link to="/submissions">My Submissions</Link>
+            </li>
+            <li>
+              <Link to="/submissions/new">Submit Assignment</Link>
+            </li>
+          </>
+        )}
+
+        {/* Auth / Sign Out */}
         {user ? (
           <>
             <li>Welcome, {user.username}</li>
@@ -56,12 +70,6 @@ const Navbar = () => {
             </li>
           </>
         )}
-        {user?.role === "Student" && (
-  <li>
-    <Link to="/my-submissions">My Submissions</Link>
-  </li>
-)}
-
       </ul>
     </nav>
   );
