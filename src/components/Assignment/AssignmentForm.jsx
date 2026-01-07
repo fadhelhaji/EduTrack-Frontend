@@ -15,7 +15,7 @@ function AssignmentForm() {
         description: '',
         deadline: '',
         totalGrade: '',
-        class: ''
+        // class: ''
     })
 
     async function handleSubmit(e){
