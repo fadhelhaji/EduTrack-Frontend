@@ -13,7 +13,14 @@ import { useContext } from 'react'
 import AssignmentForm from './components/Assignment/AssignmentForm'
 import AssignmentList from './components/Assignment/AssignmentList'
 import AssignmentDetails from './components/Assignment/AssignmentDetails'
+
+import SubmissionForm from "./components/Submission/SubmissionForm";
+import SubmissionList from "./components/Submission/SubmissionList";
+import SubmissionDetails from "./components/Submission/SubmissionsDetails";
+
+
 import { UserContext } from './components/Contexts/UserContext'
+
 
 
 function App() {
@@ -27,10 +34,20 @@ function App() {
 
         <Route path="/auth/sign-up" element={<SignUpForm />} />
         <Route path="/auth/sign-in" element={<SignInForm />} />
+        
 
         {/* {user?.role ==='Student' && (
           <>
           
+          
+            <Route
+              path="/assignment/:id/submit"
+              element={<SubmissionForm studentId={user._id} />}
+            />
+            <Route path="/submissions" element={<SubmissionList />} />
+            <Route path="/submission/:id" element={<SubmissionDetails />} />
+
+
           </>
         )} */}
 
@@ -44,6 +61,8 @@ function App() {
             <Route path='/assignment' element={<AssignmentList />} />
             <Route path="/assignment/:id" element={<AssignmentDetails />} />
             <Route path="/assignment/:id/edit" element={<AssignmentForm />} />
+            <Route path="/submissions" element={<SubmissionList />} />
+            <Route path="/submission/:id" element={<SubmissionDetails />} />
 
           </>
         )}
