@@ -99,7 +99,6 @@ function AssignmentForm() {
                         <option value={one._id} key={one._id}>{one.className}</option>
                     ))}
                 </select>
-                
                 <button type="submit">
                     {id ? "Update Assignment" : "Create Assignment"}
                 </button>
