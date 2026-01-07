@@ -83,7 +83,46 @@ async function remove(id) {
     }
 }
 
+//get allavailable students
+async function getAllStudents() {
+  try {
+    const response = await axios.get(`${BASE_URL}/students/all`);
+    return response.data.students;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//add student
+async function addStudent(classId, studentId) {
+  try {
+    const response = await axios.put(`${BASE_URL}/class/${classId}/add-student/${studentId}`, {}, {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+})
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//remove student
+async function removeStudent(classId, studentId) {
+  try {
+    const response = await axios.put(`${BASE_URL}/class/${classId}/remove-student/${studentId}`, {}, {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+  })
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
-    create, createAssignment, index, remove, show, update
+    create, createAssignment, index, remove, show, update, addStudent, removeStudent, getAllStudents
 };
 
