@@ -1,28 +1,27 @@
-import { Route, Routes } from 'react-router'
-import { Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from 'react-router';
 
-import ClassDetails from './components/Classes/ClassDetails'
-import ClassForm from './components/Classes/ClassForm'
-import ClassList from './components/Classes/ClassList'
-import Home from './components/Home/Home'
-import Landing from './components/Landing/Landing'
-import Navbar from './components/Navbar/Navbar'
-import SignInForm from './components/User/SignIn/SignInForm'
-import SignUpForm from './components/User/SignUp/SignUpForm'
+import ClassDetails from './components/Classes/ClassDetails';
+import ClassForm from './components/Classes/ClassForm';
+import ClassList from './components/Classes/ClassList';
+import Home from './components/Home/Home';
+import Landing from './components/Landing/Landing';
+import Navbar from './components/Navbar/Navbar';
+import SignInForm from './components/User/SignIn/SignInForm';
+import SignUpForm from './components/User/SignUp/SignUpForm';
 
-import { useContext } from 'react'
+import { useContext } from 'react';
 
-import AssignmentForm from './components/Assignment/AssignmentForm'
-import AssignmentList from './components/Assignment/AssignmentList'
-import AssignmentDetails from './components/Assignment/AssignmentDetails'
+import AssignmentDetails from './components/Assignment/AssignmentDetails';
+import AssignmentForm from './components/Assignment/AssignmentForm';
+import AssignmentList from './components/Assignment/AssignmentList';
 
+import MySubmissions from "./components/Submission/MySubmissions";
 import SubmissionForm from "./components/Submission/SubmissionForm";
 import SubmissionList from "./components/Submission/SubmissionList";
 import SubmissionDetails from "./components/Submission/SubmissionsDetails";
-import MySubmissions from "./components/Submission/MySubmissions";
 
 
-import { UserContext } from './components/Contexts/UserContext'
+import { UserContext } from './components/Contexts/UserContext';
 
 
 
