@@ -1,40 +1,77 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import axios from "axios";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate, Link } from "react-router";
+import { show, deleteSubmission } from "../../services/submissionService";
+import { UserContext } from "../Contexts/UserContext";
 
-const SubmissionDetails = () => {
+function SubmissionDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
   const [submission, setSubmission] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchSubmission();
-  }, []);
+    async function fetchSubmission() {
+      try {
+        const data = await show(id);
+        setSubmission(data);
+      } catch (err) {
+        console.error("Error loading submission:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  const fetchSubmission = async () => {
-    const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/submission/${id}`
-    );
-    setSubmission(res.data.submission);
+    fetchSubmission();
+  }, [id]);
+
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this submission?")) return;
+
+    try {
+      await deleteSubmission(submission._id);
+      navigate("/submissions");
+    } catch (err) {
+      console.error("Failed to delete submission:", err);
+      alert("Failed to delete submission.");
+    }
   };
 
-  if (!submission) return <p>Loading...</p>;
+  if (loading) return <p>Loading submission...</p>;
+  if (!submission) return <p>Submission not found</p>;
 
   return (
     <div>
-      <h2>Submission Details</h2>
-
-      <p><strong>Assignment:</strong> {submission.assignment?.title}</p>
-      <p><strong>Student:</strong> {submission.student?.name}</p>
+      <h1>Submission Details</h1>
+      <p>
+        <strong>Assignment:</strong> {submission.assignment?.title}
+      </p>
+      <p>
+        <strong>Student:</strong> {submission.student?.username || submission.student?._id}
+      </p>
       <p>
         <strong>GitHub:</strong>{" "}
-        <a href={submission.githubUrl} target="_blank">
+        <a href={submission.githubUrl} target="_blank" rel="noreferrer">
           {submission.githubUrl}
         </a>
       </p>
-      <p><strong>Notes:</strong> {submission.notes}</p>
-      <p><strong>Grade:</strong> {submission.grade}</p>
+      <p>
+        <strong>Grade:</strong> {submission.grade}
+      </p>
+      <p>
+        <strong>Notes:</strong> {submission.notes || "No notes provided"}
+      </p>
+
+      {user?.role === "Student" && (
+        <button onClick={handleDelete}>Delete Submission</button>
+      )}
+
+      <Link to="/submissions">
+        <button style={{ marginLeft: "10px" }}>Back to Submissions</button>
+      </Link>
     </div>
   );
-};
+}
 
 export default SubmissionDetails;

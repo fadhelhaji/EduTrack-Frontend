@@ -41,9 +41,6 @@ const Navbar = () => {
           <>
             <li>Welcome, {user.username}</li>
             <li>
-               <li>
-              <Link to="/submissions">My Submissions</Link>
-            </li>
               <Link to="/" onClick={handleSignOut}>
                 Sign Out
               </Link>
@@ -59,6 +56,12 @@ const Navbar = () => {
             </li>
           </>
         )}
+        {user?.role === "Student" && (
+  <li>
+    <Link to="/my-submissions">My Submissions</Link>
+  </li>
+)}
+
       </ul>
     </nav>
   );

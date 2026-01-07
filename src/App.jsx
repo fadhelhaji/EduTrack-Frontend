@@ -1,4 +1,6 @@
 import { Route, Routes } from 'react-router'
+import { Navigate } from "react-router-dom";
+
 import ClassDetails from './components/Classes/ClassDetails'
 import ClassForm from './components/Classes/ClassForm'
 import ClassList from './components/Classes/ClassList'
@@ -17,14 +19,16 @@ import AssignmentDetails from './components/Assignment/AssignmentDetails'
 import SubmissionForm from "./components/Submission/SubmissionForm";
 import SubmissionList from "./components/Submission/SubmissionList";
 import SubmissionDetails from "./components/Submission/SubmissionsDetails";
+import MySubmissions from "./components/Submission/MySubmissions";
 
 
 import { UserContext } from './components/Contexts/UserContext'
 
 
 
+
 function App() {
-    const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <div>
       <Navbar />
@@ -34,22 +38,42 @@ function App() {
 
         <Route path="/auth/sign-up" element={<SignUpForm />} />
         <Route path="/auth/sign-in" element={<SignInForm />} />
-        
+        <Route path="/submissions" element={<SubmissionList user={user} />} />
+        <Route path="/submissions/new" element={<SubmissionForm />} />
+        <Route path="/submission/:id" element={<SubmissionDetails />} />
+        <Route path="/my-submissions"
+          element={
+            user?.role === "Student" ? (
+              <MySubmissions />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
 
-        {/* {user?.role ==='Student' && (
+
+
+
+        {user?.role ==='Student' && (
           <>
           
           
-            <Route
-              path="/assignment/:id/submit"
-              element={<SubmissionForm studentId={user._id} />}
-            />
+             <Route path="/assignment" element={<AssignmentList />} />
+            <Route path="/assignment/:id" element={<AssignmentDetails />} />
+          </>
+        )}
+
+        {/* Submission routes */}
+        {user && (
+          <>
             <Route path="/submissions" element={<SubmissionList />} />
+            <Route path="/submissions/new" element={<SubmissionForm />} />
             <Route path="/submission/:id" element={<SubmissionDetails />} />
 
 
           </>
-        )} */}
+        )}
+
 
         {user?.role === "Instructor" && (
           <>
