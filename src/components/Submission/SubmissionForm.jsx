@@ -1,60 +1,104 @@
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import { createSubmission } from "../../services/submissionService";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { create } from "../../services/submissionService";
+import { UserContext } from "../Contexts/UserContext";
+import * as assignmentService from "../../services/assignmentService";
 
-const SubmissionForm = ({ studentId }) => {
-  const { id: assignmentId } = useParams();
+function SubmissionForm() {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const [searchParams] = useSearchParams();
+  const assignmentIdParam = searchParams.get("assignmentId");
 
-  const [githubUrl, setGithubUrl] = useState("");
-  const [notes, setNotes] = useState("");
-  const [error, setError] = useState("");
+  const [assignments, setAssignments] = useState([]);
+  const [submission, setSubmission] = useState({
+    assignment: assignmentIdParam || "",
+    githubUrl: "",
+    notes: "",
+    student: user?._id,
+  });
+  const [loading, setLoading] = useState(true);
 
-  const handleSubmit = async (element) => {
-    element.preventDefault();
-    setError("");
+  useEffect(() => {
+    async function fetchAssignments() {
+      try {
+        const data = await assignmentService.index();
+        setAssignments(data || []);
+      } catch (err) {
+        console.error("Error fetching assignments:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAssignments();
+  }, []);
+
+  const handleChange = (e) => {
+    setSubmission({ ...submission, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      await createSubmission({
-        githubUrl,
-        notes,
-        student: studentId,
-        assignment: assignmentId,
-      });
-
+      await create(submission);
       navigate("/submissions");
     } catch (err) {
-      if (err.response?.status === 500) {
-        setError("You already submitted this assignment.");
-      } else {
-        setError("Failed to submit assignment.");
-      }
+      console.error("Error creating submission:", err);
+      alert("Failed to submit assignment.");
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+
+  if (user?.role !== "Student") {
+    return <p>Only students can submit assignments.</p>;
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Submit Assignment</h2>
+    <div>
+      <h1>Submit Assignment</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="assignment">Assignment</label>
+        <select
+          id="assignment"
+          name="assignment"
+          value={submission.assignment}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Assignment</option>
+          {assignments.map((a) => (
+            <option key={a._id} value={a._id}>
+              {a.title}
+            </option>
+          ))}
+        </select>
 
-      <input
-        type="url"
-        placeholder="GitHub Repository URL"
-        value={githubUrl}
-        onChange={(element) => setGithubUrl(element.target.value)}
-        required
-      />
+        <label htmlFor="githubUrl">GitHub URL</label>
+        <input
+          id="githubUrl"
+          name="githubUrl"
+          type="url"
+          value={submission.githubUrl}
+          onChange={handleChange}
+          placeholder="https://github.com/yourrepo"
+          required
+        />
 
-      <textarea
-        placeholder="Notes (optional)"
-        value={notes}
-        onChange={(element) => setNotes(element.target.value)}
-      />
+        <label htmlFor="notes">Notes</label>
+        <textarea
+          id="notes"
+          name="notes"
+          value={submission.notes}
+          onChange={handleChange}
+          placeholder="Optional notes"
+        />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit Assignment</button>
+      </form>
+    </div>
   );
-};
+}
 
 export default SubmissionForm;

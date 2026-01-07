@@ -1,46 +1,59 @@
 import axios from "axios";
-const BASE_URL = `${import.meta.env.VITE_API_URL}`
-export const createSubmission = async (submissionData) => {
-  try {
-    const res = await axios.post(BASE_URL, submissionData);
-    return res.data;
-  } catch (err) {
-    throw err;
-  }
-};
 
-export const getSubmissions = async () => {
-  try {
-    const res = await axios.get(BASE_URL);
-    return res.data.submissions;
-  } catch (err) {
-    throw err;
-  }
-};
+const BASE_URL = import.meta.env.VITE_API_URL;
 
-export const getSubmissionById = async (id) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/${id}`);
-    return res.data.submission;
-  } catch (err) {
-    throw err;
-  }
-};
+const getAuthHeader = () => ({
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+});
 
-export const deleteSubmission = async (id) => {
+async function create(submission) {
   try {
-    const res = await axios.delete(`${BASE_URL}/${id}`);
-    return res.data;
-  } catch (err) {
-    throw err;
+    const response = await axios.post(`${BASE_URL}/submission`, submission, getAuthHeader());
+    return response.data;
+  } catch (error) {
+    console.error("Create Submission Error:", error.response?.data || error.message);
+    throw error;
   }
-};
+}
 
-export const updateSubmission = async (id, updatedData) => {
+async function getSubmissions() {
   try {
-    const res = await axios.put(`${BASE_URL}/${id}`,updatedData);
-    return res.data;
-  } catch (err) {
-    throw err;
+    const response = await axios.get(`${BASE_URL}/submission`, getAuthHeader());
+    return response.data.submissions;
+  } catch (error) {
+    console.error("Fetch Submissions Error:", error.response?.data || error.message);
+    throw error;
   }
-};
+}
+
+async function show(id) {
+  try {
+    const response = await axios.get(`${BASE_URL}/submission/${id}`, getAuthHeader());
+    return response.data.submission;
+  } catch (error) {
+    console.error("Show Submission Error:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function update(id, submission) {
+  try {
+    const response = await axios.put(`${BASE_URL}/submission/${id}`, submission, getAuthHeader());
+    return response.data.submission;
+  } catch (error) {
+    console.error("Update Submission Error:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function deleteSubmission(id) {
+  try {
+    const response = await axios.delete(`${BASE_URL}/submission/${id}`, getAuthHeader());
+    return response.data.submission;
+  } catch (error) {
+    console.error("Delete Submission Error:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export { create, getSubmissions, show, update, deleteSubmission };

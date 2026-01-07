@@ -1,91 +1,95 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../Contexts/UserContext";
 import { getSubmissions, deleteSubmission } from "../../services/submissionService";
-import { Link } from "react-router";
 
-const SubmissionList = ({ user }) => {
+function SubmissionList() {
+  const { user } = useContext(UserContext);
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchSubmissions = async () => {
-    try {
-      const data = await getSubmissions();
-
-      let filtered = data;
-      if (user?.role === "Student") {
-        filtered = data.filter((onestudent) => onestudent.student?._id === user._id);
-      }
-
-      setSubmissions(filtered);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load submissions.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchSubmissions();
-  }, []);
+    async function fetchSubmissions() {
+      try {
+        let data = await getSubmissions();
+
+        if (user?.role === "Student") {
+          data = data.filter((s) => s.student?._id === user._id);
+        }
+
+        setSubmissions(data || []);
+      } catch (err) {
+        console.error("Error fetching submissions:", err);
+        setError("Failed to load submissions.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (user) fetchSubmissions();
+  }, [user]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this submission?")) return;
 
     try {
       await deleteSubmission(id);
-      setSubmissions(submissions.filter((onestudent) => onestudent._id !== id));
+      setSubmissions(submissions.filter((s) => s._id !== id));
     } catch (err) {
+      console.error("Failed to delete submission:", err);
       alert("Failed to delete submission.");
     }
   };
 
   if (loading) return <p>Loading submissions...</p>;
 
-  if (submissions.length === 0) return <p>No submissions found.</p>;
-
   return (
     <div>
-      <h2>Submissions</h2>
+      <h1>{user?.role === "Student" ? "My Submissions" : "All Submissions"}</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {submissions.map((onestudent) => (
+      {submissions.length === 0 && user?.role === "Student" && (
+        <>
+          <p>You have not submitted any assignments yet.</p>
+          <Link to="/submissions/new">
+            <button>Submit Assignment</button>
+          </Link>
+        </>
+      )}
+
+      {submissions.map((s) => (
         <div
-          key={onestudent._id}
-          style={{
-            border: "1px solid #ccc",
-            margin: "10px",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
+          key={s._id}
+         
         >
           <p>
-            <strong>Assignment:</strong> {onestudent.assignment?.title}
+            <strong>Assignment:</strong> {s.assignment?.title}
           </p>
           <p>
-            <strong>Student:</strong> {onestudent.student?.name || onestudent.student?._id}
+            <strong>Student:</strong> {s.student?.username || s.student?._id}
           </p>
           <p>
-            <strong>Grade:</strong> {onestudent.grade}
+            <strong>Grade:</strong> {s.grade}
           </p>
           <p>
             <strong>GitHub:</strong>{" "}
-            <a href={onestudent.githubUrl} target="_blank">
+            <a href={s.githubUrl} target="_blank" rel="noreferrer">
               {s.githubUrl}
             </a>
           </p>
 
-          <Link to={`/submission/${onestudent._id}`} style={{ marginRight: "10px" }}>
+          <Link to={`/submission/${s._id}`} style={{ marginRight: "10px" }}>
             Details
           </Link>
 
-          {user?.role === "Instructor" && (
+          {user?.role === "Student" && (
             <button onClick={() => handleDelete(s._id)}>Delete</button>
           )}
         </div>
       ))}
     </div>
   );
-};
+}
 
 export default SubmissionList;
