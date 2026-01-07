@@ -43,10 +43,10 @@ const Navbar = () => {
         {user ? (
           <>
             <li>Welcome, {user.username}</li>
-            <li>
                <li>
               <Link to="/submissions">My Submissions</Link>
             </li>
+            <li>
               <Link to="/" onClick={handleSignOut}>
                 Sign Out
               </Link>

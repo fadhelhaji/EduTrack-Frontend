@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router'
 import * as authService from '../../services/authService'
 
 function StudentList() {
@@ -18,7 +19,11 @@ function StudentList() {
     <div>
         {student.map((one)=>{
             return(
-                <p key={one._id}>{one.firstName}</p>
+                <p key={one._id}>
+                    <Link to={`/auth/students/${one._id}`}>
+                        {one.firstName} {one.lastName}
+                    </Link>
+                </p>
             )
         })}
     </div>
