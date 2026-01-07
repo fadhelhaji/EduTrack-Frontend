@@ -13,16 +13,11 @@ import { useContext } from 'react'
 import AssignmentDetails from './components/Assignment/AssignmentDetails'
 import AssignmentForm from './components/Assignment/AssignmentForm'
 import AssignmentList from './components/Assignment/AssignmentList'
-<<<<<<< HEAD
-=======
-import AssignmentDetails from './components/Assignment/AssignmentDetails'
 
-import SubmissionForm from "./components/Submission/SubmissionForm";
-import SubmissionList from "./components/Submission/SubmissionList";
-import SubmissionDetails from "./components/Submission/SubmissionsDetails";
+import SubmissionList from "./components/Submission/SubmissionList"
+import SubmissionDetails from "./components/Submission/SubmissionsDetails"
 
 
->>>>>>> b8d494fbac5bd97977c4357e3c7f989184f5c611
 import { UserContext } from './components/Contexts/UserContext'
 import StudentList from './components/Students/StudentList'
 
@@ -66,14 +61,11 @@ function App() {
             <Route path='/assignment' element={<AssignmentList />} />
             <Route path="/assignment/:id" element={<AssignmentDetails />} />
             <Route path="/assignment/:id/edit" element={<AssignmentForm />} />
-<<<<<<< HEAD
             <Route path="/class/:id/assignment/new" element={<AssignmentForm />} />
             <Route path='/auth/students' element={<StudentList />} />
-=======
             <Route path="/submissions" element={<SubmissionList />} />
             <Route path="/submission/:id" element={<SubmissionDetails />} />
 
->>>>>>> b8d494fbac5bd97977c4357e3c7f989184f5c611
           </>
         )}
 

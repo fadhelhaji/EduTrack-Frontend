@@ -62,5 +62,14 @@ async function index(){
   }
 }
 
-export { index, signIn, signUp };
+async function show(id){
+  try {
+    const response = await axios.get(`${BASE_URL}/students/${id}`)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { index, show, signIn, signUp };
 
