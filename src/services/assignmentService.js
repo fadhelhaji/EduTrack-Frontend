@@ -13,20 +13,6 @@ async function create(assignment){
         console.log(error)
     }
 }
-
-//submissions
-// const getSubmission = async (assignmentId) =>{
-//     try {
-//     const response = await axios.get(`${BASE_URL}/assignment/${assignmentId}/submissions`, getAuthHeader()); 
-//      console.log(response.data)
-//     return response.data;
-   
-//     }
-//      catch (err) {
-//     console.log(err);
-//     }
-// }
-
 //Index
 async function index(){
     try {
@@ -38,14 +24,21 @@ async function index(){
 }
 
 //Show 
-async function show(id) {
-    try {
-       const response = await axios.get(`${BASE_URL}/assignment/${id}`);
-        return response.data.assignment
-    } catch (error) {
-        console.log(error);
-    }
+async function getAssignmentForClass(classId, assignmentId) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      `${BASE_URL}/class/${classId}/assignment/${assignmentId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    return response.data.assignment;
+  } catch (error) {
+    console.log(error);
+  }
 }
+
 
 //Update
 async function update(id, assignment) {
@@ -69,5 +62,6 @@ async function remove(id) {
 
 
 export {
-    create, index, show, update, remove 
+    create, getAssignmentForClass, index, remove, update
 };
+

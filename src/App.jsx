@@ -15,6 +15,7 @@ import AssignmentDetails from './components/Assignment/AssignmentDetails';
 import AssignmentForm from './components/Assignment/AssignmentForm';
 import AssignmentList from './components/Assignment/AssignmentList';
 
+
 import MySubmissions from "./components/Submission/MySubmissions";
 import SubmissionForm from "./components/Submission/SubmissionForm";
 import SubmissionList from "./components/Submission/SubmissionList";
@@ -82,10 +83,13 @@ function App() {
             <Route path="/class/:id/edit" element={<ClassForm />} />
             <Route path='/assignment/new' element={<AssignmentForm />} />
             <Route path='/assignment' element={<AssignmentList />} />
-            <Route path="/assignment/:id" element={<AssignmentDetails />} />
-            <Route path="/assignment/:id/edit" element={<AssignmentForm />} />
             <Route path="/submissions" element={<SubmissionList />} />
             <Route path="/submission/:id" element={<SubmissionDetails />} />
+            <Route path="/class/:id/assignment/new" element={<AssignmentForm />} />
+            <Route path="/class/:id/assignment/:assignmentId/edit" element={<AssignmentForm />} />
+            <Route path="/class/:classId/assignment/:assignmentId" element={<AssignmentDetails />} />
+
+
 
           </>
         )}

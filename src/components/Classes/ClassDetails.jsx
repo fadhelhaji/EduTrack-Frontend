@@ -9,7 +9,6 @@ function ClassDetails() {
   const navigate = useNavigate();
   const [cls, setCls] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState([])
   const [assignment, setAssignment] = useState([])
   const [availableStudents, setAvailableStudents] = useState([])
   const [classStudents, setClassStudents] = useState([])
@@ -78,23 +77,19 @@ async function handleRemoveStudent(studentId) {
       <h3>Assignment</h3>
       {assignment && assignment.length > 0 ? (
         <ul>
-          {assignment.map((a) => (
+          {cls && assignment.map((a) => (
             <li key={a._id}>
-              <h4>{a.title}</h4>
-              <p>{a.description}</p>
-              <p>
-                Deadline: {(a.deadline)}
-              </p>
-              <p>Total Grade: {a.totalGrade}</p>
+              <Link to={`/class/${cls._id}/assignment/${a._id}`}>{a.title}</Link>
             </li>
           ))}
         </ul>
       ) : (
         <p>No assignments yet</p>
       )}
-      <Link to={`/class/${id}/assignment/new`}>
+      <Link to={`/class/${cls._id}/assignment/new`}>
         <button>Create Assignment</button>
       </Link>
+
 
 
 

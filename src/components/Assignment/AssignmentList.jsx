@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import * as assignmentService from '../../services/assignmentService' 
 import { Link } from 'react-router';
+import * as assignmentService from '../../services/assignmentService';
 
 
 function AssignmentList(){
@@ -34,7 +34,7 @@ return (
         assignments.map((assignment) => (
           <div key={assignment._id}>
             <h3>
-            <Link to={`/assignment/${assignment._id}`}>
+            <Link to={`/class/${assignment.class}/assignment/${assignment._id}`}>
             {assignment.title}
             </Link>
             </h3>
