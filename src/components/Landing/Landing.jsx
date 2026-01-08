@@ -57,7 +57,7 @@ const Landing = () => {
       <div id="roles" className="py-32 px-8 max-w-7xl mx-auto">
   <div className="text-center mb-20">
     <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter text-base-content">
-      Tailored Experiences
+      Managment System Platform
     </h2>
     <p className="text-lg opacity-60 max-w-xl mx-auto">
       Whether you're leading a lecture or mastering a new subject, EduTrack provides the precision tools you need.
@@ -106,7 +106,7 @@ const Landing = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <div className="badge badge-accent badge-outline font-bold tracking-widest px-4 py-3">SCHOLAR</div>
+            <div className="badge badge-accent badge-outline font-bold tracking-widest px-4 py-3">STUDENT</div>
           </div>
 
           <h2 className="text-3xl font-bold mb-4">Master Your Studies</h2>
