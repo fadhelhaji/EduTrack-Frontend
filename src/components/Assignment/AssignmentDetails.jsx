@@ -39,7 +39,6 @@ function AssignmentDetails() {
       <h1>{assignment.title}</h1>
       <p>Description: {assignment.description}</p>
       <p>Deadline: {assignment.deadline ? new Date(assignment.deadline).toLocaleDateString() : "No deadline"}</p>
-      <p>Total Grade: {assignment.totalGrade}</p>
 
       <Link to={`/class/${classId}/assignment/${assignment._id}/edit`}>
         <button>Edit Assignment</button>

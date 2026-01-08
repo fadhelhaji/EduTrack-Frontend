@@ -69,9 +69,7 @@ function SubmissionList() {
           <p>
             <strong>Student:</strong> {s.student?.username || s.student?._id}
           </p>
-          <p>
-            <strong>Grade:</strong> {s.grade}
-          </p>
+
           <p>
             <strong>GitHub:</strong>{" "}
             <a href={s.githubUrl} target="_blank" rel="noreferrer">

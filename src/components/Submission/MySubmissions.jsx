@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router";
-import { UserContext } from "../Contexts/UserContext";
 import {
-  getSubmissions,
   deleteSubmission,
+  getSubmissions,
 } from "../../services/submissionService";
+import { UserContext } from "../Contexts/UserContext";
 
 const MySubmissions = () => {
   const { user } = useContext(UserContext);
@@ -24,6 +23,7 @@ const MySubmissions = () => {
       );
 
       setSubmissions(mySubs);
+      console.log(submissions)
     } catch (err) {
       console.error(err);
     } finally {
@@ -32,9 +32,6 @@ const MySubmissions = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Delete this submission?");
-    if (!confirm) return;
-
     await deleteSubmission(id);
     setSubmissions(submissions.filter((s) => s._id !== id));
   };
@@ -65,11 +62,7 @@ const MySubmissions = () => {
 
           <p>
             <strong>Deadline:</strong>{" "}
-            {new Date(s.assignment?.deadline).toLocaleDateString()}
-          </p>
-
-          <p>
-            <strong>Grade:</strong> {s.grade}
+            {new Date(s.assignment?.deadline)}
           </p>
 
           <p>

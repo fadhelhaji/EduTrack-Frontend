@@ -18,14 +18,12 @@ function AssignmentForm() {
         title: '',
         description: '',
         deadline: '',
-        totalGrade: '',
         class: ''
     })
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        // 🔑 Single source of truth
         const finalClassId = classId || assignment.class;
 
         if (!finalClassId) {
@@ -56,7 +54,6 @@ function AssignmentForm() {
                 const classData = await classService.index();
                 setClasses(classData);
 
-                // EDIT MODE
                 if (assignmentId) {
                     const existing = await assignmentService.show(assignmentId);
 
@@ -68,7 +65,6 @@ function AssignmentForm() {
 
                     setAssignment(existing);
                 }
-                // CREATE MODE
                 else if (classId) {
                     setAssignment(prev => ({
                         ...prev,
@@ -108,8 +104,6 @@ function AssignmentForm() {
                 <label htmlFor="deadline">Deadline</label>
                 <input value={assignment.deadline} onChange={handleChange} name='deadline' id='deadline' type="date" />
 
-                <label htmlFor="totalGrade">Total Grade</label>
-                <input value={assignment.totalGrade} onChange={handleChange} name='totalGrade' id='totalGrade' type="number" />
 
                 <label htmlFor="class">Class</label>
                 <select

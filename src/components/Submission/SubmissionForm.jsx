@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import * as assignmentService from "../../services/assignmentService";
 import { create } from "../../services/submissionService";
 import { UserContext } from "../Contexts/UserContext";
-import * as assignmentService from "../../services/assignmentService";
 
 function SubmissionForm() {
   const navigate = useNavigate();
@@ -51,32 +51,105 @@ function SubmissionForm() {
 
   if (loading) return <p>Loading...</p>;
 
+  const now = new Date();
+
+  const availableAssignments = assignments.filter(
+    (a) => new Date(a.deadline) >= now
+  );
+
+  const overdueAssignments = assignments.filter(
+    (a) => new Date(a.deadline) < now
+  );
+
+
   if (user?.role !== "Student") {
     return <p>Only students can submit assignments.</p>;
   }
 
-  if(!assignments.length){
+  if (!assignments.length) {
     return <h1>No Assignments Assigned to your class yet. come back later</h1>
   }
   return (
     <div>
       <h1>Submit Assignment</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="assignment">Assignment</label>
-        <select
-          id="assignment"
-          name="assignment"
-          value={submission.assignment}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Assignment</option>
-          {assignments.map((a) => (
-            <option key={a._id} value={a._id}>
-              {a.title}
-            </option>
+        {/* <label htmlFor="assignment">Assignment</label> */}
+        <div>
+          <h3>Available Assignments</h3>
+
+          {availableAssignments.length === 0 && (
+            <p>No assignments available for submission</p>
+          )}
+
+          {availableAssignments.map((a) => (
+            <label
+              key={a._id}
+              style={{
+                display: "block",
+                border: "1px solid #ccc",
+                padding: "10px",
+                marginBottom: "8px",
+                borderRadius: "6px",
+                cursor: "pointer",
+                background:
+                  submission.assignment === a._id ? "white" : "black",
+              }}
+            >
+              <input
+                type="radio"
+                name="assignment"
+                value={a._id}
+                checked={submission.assignment === a._id}
+                onChange={handleChange}
+                required
+                style={{ marginRight: "10px" }}
+              />
+
+              <strong>{a.title}</strong>
+              <br />
+              <small>
+                Deadline:{" "}
+                {new Date(a.deadline).toLocaleDateString("en-GB", {
+                  timeZone: "Asia/Bahrain",
+                })}
+              </small>
+            </label>
           ))}
-        </select>
+        </div>
+
+        <hr />
+
+        <div>
+          <h3 style={{ color: "red" }}>Overdue Assignments</h3>
+
+          {overdueAssignments.length === 0 && <p>No overdue assignments 🎉</p>}
+
+          {overdueAssignments.map((a) => (
+            <div
+              key={a._id}
+              style={{
+                border: "1px solid #f5c6cb",
+                padding: "10px",
+                marginBottom: "8px",
+                borderRadius: "6px",
+                background: "#f8d7da",
+                color: "#721c24",
+              }}
+            >
+              <strong>{a.title}</strong>
+              <br />
+              <small>
+                Deadline:{" "}
+                {new Date(a.deadline).toLocaleDateString("en-GB", {
+                  timeZone: "Asia/Bahrain",
+                })}{" "}
+                (Overdue)
+              </small>
+            </div>
+          ))}
+        </div>
+
+
 
         <label htmlFor="githubUrl">GitHub URL</label>
         <input
