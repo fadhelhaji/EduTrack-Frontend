@@ -1,6 +1,6 @@
 function Footbar() {
   return (
-    <footer className="footer footer-center p-12 bg-base-200 text-base-content border-t border-base-300">
+    <footer className="footer footer-center p-4 bg-base-200 text-base-content border-t border-base-300">
       <aside className="flex flex-col items-center gap-4">
         
     
