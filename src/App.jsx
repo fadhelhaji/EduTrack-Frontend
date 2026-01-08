@@ -23,6 +23,7 @@ import SubmissionDetails from "./components/Submission/SubmissionsDetails";
 
 
 import { UserContext } from './components/Contexts/UserContext';
+import Footbar from './components/Footbar/Footbar';
 
 
 
@@ -95,6 +96,7 @@ function App() {
         )}
 
       </Routes>
+      <Footbar/>
     </div>
   )
 }
