@@ -25,6 +25,7 @@ import SubmissionDetails from "./components/Submission/SubmissionsDetails";
 
 
 import { UserContext } from './components/Contexts/UserContext';
+import Footbar from './components/Footbar/Footbar';
 
 
 
@@ -96,6 +97,7 @@ function App() {
         )}
 
       </Routes>
+      <Footbar/>
         <ToastContainer position="top-right" autoClose={3000} />
     </div>
   )
