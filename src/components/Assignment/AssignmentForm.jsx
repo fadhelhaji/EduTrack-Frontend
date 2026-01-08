@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as assignmentService from '../../services/assignmentService';
 import * as classService from '../../services/classService';
@@ -21,21 +21,33 @@ function AssignmentForm() {
         totalGrade: '',
         class: ''
     })
-    const notify = () => toast("Hello, Fadhel!");
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        // 🔑 Single source of truth
+        const finalClassId = classId || assignment.class;
+
+        if (!finalClassId) {
+            toast.error("Please select a class");
+            return;
+        }
+
         try {
             if (assignmentId) {
                 await assignmentService.update(assignmentId, assignment);
+                toast.success("Assignment updated successfully!");
             } else {
-                await classService.createAssignment(classId, assignment);
-                navigate(`/class/${classId}`);
+                await classService.createAssignment(finalClassId, assignment);
+                toast.success("Assignment created successfully!");
+                navigate(`/class/${finalClassId}`);
             }
         } catch (err) {
             console.log(err);
+            toast.error("Something went wrong");
         }
     }
+
 
 
     useEffect(() => {
@@ -44,14 +56,10 @@ function AssignmentForm() {
                 const classData = await classService.index();
                 setClasses(classData);
 
+                // EDIT MODE
                 if (assignmentId) {
                     const existing = await assignmentService.show(assignmentId);
-                    if (!assignmentId && classId) {
-                        setAssignment(prev => ({
-                            ...prev,
-                            class: classId
-                        }));
-                        }
+
                     if (existing.deadline) {
                         existing.deadline = new Date(existing.deadline)
                             .toISOString()
@@ -59,8 +67,13 @@ function AssignmentForm() {
                     }
 
                     setAssignment(existing);
-                } else {
-                    setAssignment(prev => ({ ...prev, class: classId }));
+                }
+                // CREATE MODE
+                else if (classId) {
+                    setAssignment(prev => ({
+                        ...prev,
+                        class: classId
+                    }));
                 }
             } catch (err) {
                 console.log(err);
@@ -71,6 +84,7 @@ function AssignmentForm() {
 
         fetchData();
     }, [assignmentId, classId]);
+
 
 
     function handleChange(e) {
@@ -98,17 +112,22 @@ function AssignmentForm() {
                 <input value={assignment.totalGrade} onChange={handleChange} name='totalGrade' id='totalGrade' type="number" />
 
                 <label htmlFor="class">Class</label>
-                <select name="class" id='class' value={assignment.class} onChange={handleChange}>
+                <select
+                    name="class"
+                    id="class"
+                    value={assignment.class}
+                    onChange={handleChange}
+                    disabled={!!classId}
+                >
                     <option value="">Select a Class</option>
                     {classes.map((one) => (
                         <option value={one._id} key={one._id}>{one.className}</option>
                     ))}
                 </select>
                 <div>
-                <button onClick={notify} type="submit">
-                    {assignmentId ? "Update Assignment" : "Create Assignment"}
-                </button>
-                <ToastContainer />
+                    <button type="submit">
+                        {assignmentId ? "Update Assignment" : "Create Assignment"}
+                    </button>
                 </div>
             </form>
         </div>
