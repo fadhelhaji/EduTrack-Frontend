@@ -1,8 +1,12 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as assignmentService from '../../services/assignmentService';
 import * as classService from '../../services/classService';
+
+
 
 function AssignmentForm() {
     const navigate = useNavigate()
@@ -17,6 +21,7 @@ function AssignmentForm() {
         totalGrade: '',
         class: ''
     })
+    const notify = () => toast("Hello, Fadhel!");
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -99,9 +104,12 @@ function AssignmentForm() {
                         <option value={one._id} key={one._id}>{one.className}</option>
                     ))}
                 </select>
-                <button type="submit">
+                <div>
+                <button onClick={notify} type="submit">
                     {assignmentId ? "Update Assignment" : "Create Assignment"}
                 </button>
+                <ToastContainer />
+                </div>
             </form>
         </div>
     )
