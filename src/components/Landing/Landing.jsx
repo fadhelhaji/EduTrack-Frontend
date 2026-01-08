@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <main className="overflow-x-hidden bg-[#eceff4]">
+      {/* Hero Section */}
       <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#2e3440]">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#88c0d0]/10 rounded-full blur-[120px]"></div>
@@ -34,8 +35,10 @@ const Landing = () => {
         </div>
       </div>
 
+      {/* Features & Roles Section */}
       <div id="roles" className="py-24 px-8 max-w-7xl mx-auto flex flex-col items-center">
         
+        {/* The Platform Card */}
         <div className="relative group w-full max-w-5xl mb-32">
           <div className="absolute -inset-1 bg-gradient-to-r from-[#88c0d0] via-[#5e81ac] to-[#b48ead] rounded-[3rem] blur-xl opacity-20 group-hover:opacity-40 transition duration-1000 animate-pulse"></div>
           <div className="relative hero bg-[#2e3440] rounded-[2.5rem] shadow-2xl overflow-hidden border border-white/10">
@@ -68,10 +71,12 @@ const Landing = () => {
           <div className="w-16 h-1 bg-[#88c0d0] mt-4 rounded-full"></div>
         </div>
 
+        {/* Access Portals Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full max-w-6xl mb-32">
+          {/* Instructor Card */}
           <div className="group relative transition-all duration-500 hover:-translate-y-3">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#5e81ac] to-[#88c0d0] rounded-[2rem] blur opacity-0 group-hover:opacity-20 transition duration-500"></div>
-            <div className="relative bg-white rounded-[1.8rem] p-12 border border-[#d8dee9] shadow-sm flex flex-col items-center text-center h-full overflow-hidden">
+            <div className="relative bg-[#f8fafc] rounded-[1.8rem] p-12 border border-[#d8dee9] shadow-sm flex flex-col items-center text-center h-full overflow-hidden">
               <div className="w-16 h-16 bg-[#5e81ac] text-white rounded-2xl flex items-center justify-center shadow-lg mb-8 transition-transform duration-500 group-hover:rotate-12">
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               </div>
@@ -86,9 +91,10 @@ const Landing = () => {
             </div>
           </div>
 
+          {/* Student Card */}
           <div className="group relative transition-all duration-500 hover:-translate-y-3">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#b48ead] to-[#d8dee9] rounded-[2rem] blur opacity-0 group-hover:opacity-20 transition duration-500"></div>
-            <div className="relative bg-white rounded-[1.8rem] p-12 border border-[#d8dee9] shadow-sm flex flex-col items-center text-center h-full overflow-hidden">
+            <div className="relative bg-[#f8fafc] rounded-[1.8rem] p-12 border border-[#d8dee9] shadow-sm flex flex-col items-center text-center h-full overflow-hidden">
               <div className="w-16 h-16 bg-[#b48ead] text-white rounded-2xl flex items-center justify-center shadow-lg mb-8 transition-transform duration-500 group-hover:-rotate-12">
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
               </div>
@@ -104,8 +110,10 @@ const Landing = () => {
           </div>
         </div>
 
+        {/* Feature Lists */}
         <div className="w-full space-y-12">
-          <div className="relative group overflow-hidden bg-white border border-[#d8dee9] rounded-[2.5rem] shadow-sm hover:shadow-md transition-all">
+          {/* Instructor Features Card */}
+          <div className="relative group overflow-hidden bg-[#f1f5f9] border border-[#d8dee9] rounded-[2.5rem] shadow-sm hover:shadow-md transition-all">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#5e81ac]/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
             <div className="p-12 text-center relative z-10">
               <h3 className="text-xs font-black text-[#5e81ac] tracking-[0.4em] uppercase mb-12">Instructor Core Features</h3>
@@ -129,7 +137,8 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="relative group overflow-hidden bg-white border border-[#d8dee9] rounded-[2.5rem] shadow-sm hover:shadow-md transition-all">
+          {/* Student Features Card */}
+          <div className="relative group overflow-hidden bg-[#f1f5f9] border border-[#d8dee9] rounded-[2.5rem] shadow-sm hover:shadow-md transition-all">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#b48ead]/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
             <div className="p-12 text-center relative z-10">
               <h3 className="text-xs font-black text-[#b48ead] tracking-[0.4em] uppercase mb-12">Student Workspace Features</h3>
