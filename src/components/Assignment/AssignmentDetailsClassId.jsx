@@ -29,7 +29,6 @@ function AssignmentDetailsClassId() {
       <h1>{assignment.title}</h1>
       <p>{assignment.description}</p>
       <p>Deadline: {assignment.deadline}</p>
-      <p>Total Grade: {assignment.totalGrade}</p>
     </div>
   );
 }

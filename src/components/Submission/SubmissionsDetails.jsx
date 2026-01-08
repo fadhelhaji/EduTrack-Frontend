@@ -1,6 +1,6 @@
-import { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate, Link } from "react-router";
-import { show, deleteSubmission } from "../../services/submissionService";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import { deleteSubmission, show } from "../../services/submissionService";
 import { UserContext } from "../Contexts/UserContext";
 
 function SubmissionDetails() {
@@ -56,9 +56,7 @@ function SubmissionDetails() {
           {submission.githubUrl}
         </a>
       </p>
-      <p>
-        <strong>Grade:</strong> {submission.grade}
-      </p>
+
       <p>
         <strong>Notes:</strong> {submission.notes || "No notes provided"}
       </p>

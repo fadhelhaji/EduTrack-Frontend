@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ClassDetails from './components/Classes/ClassDetails';
 import ClassForm from './components/Classes/ClassForm';
 import ClassList from './components/Classes/ClassList';
@@ -91,12 +93,12 @@ function App() {
             <Route path="/class/:classId/assignment/:assignmentId" element={<AssignmentDetails />} />
 
 
-
           </>
         )}
 
       </Routes>
       <Footbar/>
+        <ToastContainer position="top-right" autoClose={3000} />
     </div>
   )
 }
