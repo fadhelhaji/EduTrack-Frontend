@@ -23,6 +23,17 @@ async function index(){
     }
 }
 
+//Index
+async function myAssignments(){
+    try {
+        const token = localStorage.getItem('token')
+        const response = await axios.get(`${BASE_URL}/assignment/my-assignments`,{headers:{Authorization: `Bearer ${token}`}});
+        return response.data.assignments
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //Show 
 async function getAssignmentForClass(classId, assignmentId) {
   try {
@@ -62,6 +73,6 @@ async function remove(id) {
 
 
 export {
-    create, getAssignmentForClass, index, remove, update
+    create, getAssignmentForClass, index, remove, update, myAssignments
 };
 

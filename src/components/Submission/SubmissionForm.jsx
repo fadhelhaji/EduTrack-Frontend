@@ -22,7 +22,7 @@ function SubmissionForm() {
   useEffect(() => {
     async function fetchAssignments() {
       try {
-        const data = await assignmentService.index();
+        const data = await assignmentService.myAssignments();
         setAssignments(data || []);
       } catch (err) {
         console.error("Error fetching assignments:", err);
@@ -55,6 +55,9 @@ function SubmissionForm() {
     return <p>Only students can submit assignments.</p>;
   }
 
+  if(!assignments.length){
+    return <h1>No Assignments Assigned to your class yet. come back later</h1>
+  }
   return (
     <div>
       <h1>Submit Assignment</h1>
