@@ -6,7 +6,8 @@ import * as classService from '../../services/classService';
 
 function AssignmentForm() {
     const navigate = useNavigate()
-    const {id} = useParams()
+    const { id, assignmentId } = useParams();
+    const classId = id;
     const [classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [assignment, setAssignment] = useState({
@@ -17,63 +18,67 @@ function AssignmentForm() {
         class: ''
     })
 
-    async function handleSubmit(e){
-        e.preventDefault()
+    async function handleSubmit(e) {
+        e.preventDefault();
         try {
-              await classService.createAssignment(assignment);
-              navigate('/assignment')
-        } catch (error) {
-            console.log(error)
+            if (assignmentId) {
+                await assignmentService.update(assignmentId, assignment);
+            } else {
+                await classService.createAssignment(classId, assignment);
+                navigate(`/class/${classId}`);
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
-      // useEffect(() => {
-      //   async function fetchClasses() {
-      //     try {
-      //       const data = await classService.index();
-      //       setClasses(data);
-      //       console.log(data)
-      //     } catch (error) {
-      //       console.log(error);
-      //     } finally {
-      //       setLoading(false);
-      //     }
-      //   }
-    
-      //   fetchClasses();
-      // }, []);
+
     useEffect(() => {
         async function fetchData() {
             try {
                 const classData = await classService.index();
                 setClasses(classData);
-                if (id) {
-                    const existingData = await assignmentService.show(id);
-                    if (existingData.deadline) {
-                        existingData.deadline = new Date(existingData.deadline).toISOString().split('T')[0];
+
+                if (assignmentId) {
+                    const existing = await assignmentService.show(assignmentId);
+                    if (!assignmentId && classId) {
+                        setAssignment(prev => ({
+                            ...prev,
+                            class: classId
+                        }));
+                        }
+                    if (existing.deadline) {
+                        existing.deadline = new Date(existing.deadline)
+                            .toISOString()
+                            .split("T")[0];
                     }
-                    setAssignment(existingData);
+
+                    setAssignment(existing);
+                } else {
+                    setAssignment(prev => ({ ...prev, class: classId }));
                 }
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
             } finally {
                 setLoading(false);
             }
         }
-        fetchData();
-    }, [id]);
 
-    function handleChange(e){
-        setAssignment({...assignment, [e.target.name] : e.target.value})
+        fetchData();
+    }, [assignmentId, classId]);
+
+
+    function handleChange(e) {
+        setAssignment({ ...assignment, [e.target.name]: e.target.value })
         console.log(assignment)
     }
-    
+
     if (loading) return <p>Loading...</p>;
 
-  return (
+    return (
 
-<div>
-            <h1>{id ? "Edit Assignment" : "Create Assignment"}</h1>
+        <div>
+            <h1>{assignmentId ? "Edit Assignment" : "Create Assignment"}</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title">Title</label>
                 <input value={assignment.title} onChange={handleChange} name='title' id='title' type="text" />
@@ -95,11 +100,11 @@ function AssignmentForm() {
                     ))}
                 </select>
                 <button type="submit">
-                    {id ? "Update Assignment" : "Create Assignment"}
+                    {assignmentId ? "Update Assignment" : "Create Assignment"}
                 </button>
             </form>
         </div>
-  )
+    )
 }
 
 export default AssignmentForm
