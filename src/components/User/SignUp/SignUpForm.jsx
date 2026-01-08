@@ -33,7 +33,7 @@ function SignUpForm() {
     try {
       const user = await authService.signUp(formData);
       setUser(user);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.error("Signup failed:", error);
     }

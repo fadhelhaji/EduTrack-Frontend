@@ -18,7 +18,6 @@ function ClassDetails() {
     title: '',
     description: '',
     deadline: '',
-    totalGrade: '',
   })
 
   async function refreshClass() {
