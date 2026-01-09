@@ -72,7 +72,7 @@ const Home = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
           {instructorActions.map((action, idx) => (
-            <Link key={idx} to={action.path} className={`group bg-white border border-[#d8dee9] p-6 rounded-[2rem] transition-all hover:bg-[#2e3440] ${action.color} shadow-sm`}>
+            <Link key={idx} to={action.path} className={`group bg-white border border-[#d8dee9] p-6 rounded-4xl transition-all hover:bg-[#2e3440] ${action.color} shadow-sm`}>
               <div className="flex items-center gap-4 text-left">
                 <div className="w-11 h-11 bg-[#eceff4] text-[#2e3440] rounded-xl flex items-center justify-center group-hover:bg-[#88c0d0] transition-colors shrink-0">
                   {action.icon}
@@ -104,7 +104,7 @@ const Home = () => {
 
   return (
     <PageWrapper>
-      <section className="relative overflow-hidden bg-[#2e3440] rounded-[2rem] p-8 shadow-xl border border-white/5">
+      <section className="relative overflow-hidden bg-[#2e3440] rounded-4xl p-8 shadow-xl border border-white/5">
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#88c0d0]/10 rounded-bl-full blur-3xl"></div>
         <div className="relative z-10 space-y-3 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#88c0d0]/10 border border-[#88c0d0]/20">
@@ -131,7 +131,7 @@ const Home = () => {
         ))}
       </div>
 
-      <section className="bg-white border border-[#d8dee9] rounded-[1.5rem] p-4 flex flex-col md:flex-row items-center justify-around gap-4 text-[#4c566a]">
+      <section className="bg-white border border-[#d8dee9] rounded-3xl p-4 flex flex-col md:flex-row items-center justify-around gap-4 text-[#4c566a]">
         <div className="flex items-center gap-3"><Layers size={14} className="text-[#81a1c1]"/><span className="text-[9px] font-bold uppercase tracking-widest">1. Select</span></div>
         <div className="flex items-center gap-3"><FileCode2 size={14} className="text-[#a3be8c]"/><span className="text-[9px] font-bold uppercase tracking-widest">2. Deploy</span></div>
         <div className="flex items-center gap-3"><CheckCircle size={14} className="text-[#b48ead]"/><span className="text-[9px] font-bold uppercase tracking-widest">3. Audit</span></div>
