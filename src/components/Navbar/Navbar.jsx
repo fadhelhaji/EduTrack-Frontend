@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 w-full z-[100] bg-[#2e3440] border-b border-white/5 px-6 h-20 flex items-center justify-between">
+    <nav className="w-full bg-[#2e3440] border-b border-white/5 px-6 h-20 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Link to="/" className="flex items-center gap-3 group transition-opacity hover:opacity-80">
           <svg 

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-[#2e3440] border-t border-white/5 h-20 px-8 flex items-center overflow-hidden relative">
+    <footer className=" w-full bg-[#2e3440] border-t border-white/5 h-16 px-12 flex items-center justify-center">
      
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute -left-10 top-0 w-64 h-full bg-gradient-to from-transparent via-[#88c0d0]/10 to-transparent animate-slide-infinite"></div>
