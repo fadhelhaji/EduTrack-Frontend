@@ -3,22 +3,17 @@ import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <main className="overflow-x-hidden bg-[#eceff4]">
-      <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#2e3440]">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-[#88c0d0]/10 rounded-full blur-[120px]"></div>
-          <div className="absolute top-1/4 left-1/4 w-12 h-12 border-2 border-[#81a1c1]/20 rounded-lg animate-bounce"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-16 h-16 border-2 border-[#b48ead]/10 rounded-full animate-pulse"></div>
-        </div>
+     <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#2e3440]">
+    <div className="absolute inset-0 z-0">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-[#88c0d0]/10 rounded-full blur-[120px]"></div>
+    <div className="absolute top-1/4 left-1/4 w-12 h-12 border-2 border-[#81a1c1]/20 rounded-lg animate-float"></div>
+    <div className="absolute bottom-1/4 right-1/4 w-16 h-16 border-2 border-[#b48ead]/10 rounded-full animate-float-delayed"></div>
+  </div>
 
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 rounded-full bg-white/5 backdrop-blur-md">
-            <span className="text-sm font-medium text-[#d8dee9] tracking-wide flex items-center gap-2">
-              ✨ The Future of Academic Management
-            </span>
-          </div>
-          <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-8 text-[#eceff4]">
-            EduTrack
-          </h1>
+  <div className="container mx-auto px-6 relative z-10 text-center">
+    <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-8 animate-shine">
+      EduTrack
+    </h1>
           <p className="text-xl md:text-2xl text-[#d8dee9]/80 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
             Empower instructors with <span className="text-[#88c0d0] font-semibold">total oversight</span> and students with <span className="text-[#88c0d0] font-semibold">automated GitHub tracking</span> in one unified command center.
           </p>
@@ -50,9 +45,9 @@ const Landing = () => {
                   Centralized Learning <span className="text-[#88c0d0]">Control.</span>
                 </h2>
                 <p className="text-xl text-[#d8dee9]/80 font-medium leading-relaxed">
-                  EduTrack is a high-performance management system designed to bridge the gap between 
-                  <span className="text-white font-bold"> technical submissions</span> and 
-                  <span className="text-white font-bold"> administrative oversight</span>.
+                  EduTrack is a high-performance Management System designed to bridge the gap between 
+                  <span className="text-white font-bold"> Technical Submissions</span> and 
+                  <span className="text-white font-bold"> Administrative Oversight</span>.
                 </p>
               </div>
             </div>
@@ -78,7 +73,7 @@ const Landing = () => {
               <h3 className="text-4xl font-black text-white uppercase tracking-tighter mb-2 transition-colors group-hover:text-[#88c0d0]">Instructor</h3>
               <p className="text-xs font-black text-[#81a1c1] tracking-[0.3em] uppercase mb-6 opacity-80">Administrative Suite</p>
               <p className="text-[#d8dee9]/70 font-medium leading-relaxed mb-10 grow">
-                Complete orchestration tools. Manage student rosters, deploy class groups, and audit all technical submissions from one command center.
+              Manage student rosters, deploy class groups, and audit all technical submissions from one command center.
               </p>
               <Link to="/auth/sign-up" className="btn btn-block bg-[#88c0d0] hover:bg-[#81a1c1] text-[#2e3440] border-none py-5 h-auto text-sm font-black uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all hover:scale-[1.02]">
                 Enter Portal <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
