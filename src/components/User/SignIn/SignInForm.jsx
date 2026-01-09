@@ -30,7 +30,7 @@ const SignInForm = () => {
 
   return (
     <main className="min-h-[80vh] bg-[#eceff4] flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full bg-white rounded-2rem shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[#d8dee9]">
+      <div className="max-w-4xl w-full bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[#d8dee9]">
         
         
         <div className="md:w-1/2 bg-[#2e3440] p-8 flex flex-col justify-center relative overflow-hidden">

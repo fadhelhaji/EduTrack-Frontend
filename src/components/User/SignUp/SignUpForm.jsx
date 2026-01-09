@@ -43,7 +43,7 @@ function SignUpForm() {
 
   return (
     <main className="h-[calc(100vh-144px)] bg-[#eceff4] flex items-center justify-center p-2 overflow-hidden">
-      <div className="max-w-5xl w-full max-h-full bg-white rounded-2rem shadow-2xl flex flex-col md:flex-row border border-[#d8dee9] overflow-hidden">
+      <div className="max-w-5xl w-full max-h-full bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row border border-[#d8dee9] overflow-hidden">
         
         <div className="md:w-1/3 bg-[#2e3440] p-8 flex flex-col justify-center relative">
           <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
