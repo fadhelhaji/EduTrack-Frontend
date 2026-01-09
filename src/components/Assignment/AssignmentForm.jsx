@@ -96,7 +96,7 @@ return (
                         <FilePlus size={80} />
                     </div>
                     <button 
-                        onClick={() => navigate(-1)} 
+                        onClick={() => navigate('/assignment')} 
                         className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                     >
                         <ArrowLeft size={14} /> Back
