@@ -20,6 +20,14 @@ function ClassDetails() {
     deadline: '',
   })
 
+  const programNames = {
+  'SEB': 'Software Engineering',
+  'UI-UX': 'UI-UX Design',
+  'Java': 'Java Enterprise',
+  'DS': 'Data Science',
+  'DA': 'Data Analytics'
+};
+
   async function refreshClass() {
   try {
     const data = await classService.show(id)
@@ -83,9 +91,19 @@ async function handleRemoveStudent(studentId) {
   );
 
   return (
-  <div className="min-h-[80vh] max-w-5xl mx-auto p-4 space-y-8 animate-in fade-in duration-500">
-      
-      
+<div className="min-h-[80vh] max-w-5xl mx-auto p-4 space-y-8 animate-in fade-in duration-500">
+      <div className="flex items-center justify-between px-2">
+      <Link 
+        to="/class" 
+        className="group flex items-center gap-2 text-[#4c566a] hover:text-[#88c0d0] transition-colors"
+      >
+        <div className="p-2 rounded-xl bg-[#eceff4] group-hover:bg-[#88c0d0] group-hover:text-white transition-all">
+          <ArrowRight className="rotate-180" size={18} />
+        </div>
+        <span className="text-xs font-black uppercase tracking-widest">Return to Dashboard</span>
+      </Link>
+    </div>
+    
       <div className="bg-[#2e3440] rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl border border-white/5">
         <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#88c0d0] opacity-10 blur-3xl"></div>
         
@@ -102,10 +120,14 @@ async function handleRemoveStudent(studentId) {
               <span className="text-[9px] font-black uppercase text-white/40">Instructor (Lead)</span>
               <span className="font-bold text-[#81a1c1]">{cls.instructor?.username || "Verified"}</span>
             </div>
+            
             <div className="h-8 w-px bg-white/10 hidden md:block"></div>
+
             <div className="flex flex-col">
               <span className="text-[9px] font-black uppercase text-white/40">Program</span>
-              <span className="font-bold">{cls.program}</span>
+              <span className="font-bold">
+                {programNames[cls.program] || cls.program}
+              </span>
             </div>
           </div>
 
@@ -125,7 +147,6 @@ async function handleRemoveStudent(studentId) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-       
         <div className="bg-white rounded-[2.5rem] p-8 border border-[#d8dee9] shadow-sm hover:shadow-md transition-shadow">
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center gap-3">
@@ -154,7 +175,6 @@ async function handleRemoveStudent(studentId) {
           </div>
         </div>
 
-       
         <div className="bg-white rounded-[2.5rem] p-8 border border-[#d8dee9] shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-8">
             <Users className="text-[#88c0d0]" />
@@ -204,11 +224,9 @@ async function handleRemoveStudent(studentId) {
         </div>
       </div>
 
-            {/* popup to confirm delete */}
       {isDeleteOpen && (
         <div className="modal modal-open">
           <div className="modal-box bg-[#2e3440] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl overflow-hidden relative">
-           
             <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-red-500 opacity-10 blur-3xl"></div>
             
             <div className="relative z-10 flex flex-col items-center text-center space-y-6">
@@ -242,7 +260,6 @@ async function handleRemoveStudent(studentId) {
               </div>
             </div>
           </div>
-        
           <div className="modal-backdrop bg-[#2e3440]/80 backdrop-blur-md" onClick={() => setIsDeleteOpen(false)}></div>
         </div>
       )}

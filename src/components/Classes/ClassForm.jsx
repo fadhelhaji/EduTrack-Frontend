@@ -61,7 +61,7 @@ function ClassForm() {
                     <School size={80} />
                 </div>
                 <button 
-                    onClick={() => navigate(-1)} 
+                    onClick={() => navigate('/class')} 
                     className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                 >
                     <ArrowLeft size={14} /> Back to Class
@@ -94,8 +94,8 @@ function ClassForm() {
                 <option value="SEB">Software Engineering</option>
                 <option value="UI-UX">UI-UX Design</option>
                 <option value="Java">Java</option>
-                <option value="Java">Data Science</option>
-                <option value="Java">Data Analytics</option>
+                <option value="DS">Data Science</option>
+                <option value="DA">Data Analytics</option>
             </select>
             </div>
 

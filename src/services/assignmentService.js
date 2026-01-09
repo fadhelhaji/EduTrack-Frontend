@@ -16,7 +16,7 @@ async function create(assignment){
 //Index
 async function index(){
     try {
-        const response = await axios.get(`${BASE_URL}/assignment`);
+        const response = await axios.get(`${BASE_URL}/assignment`, getAuthHeader());
         return response.data.assignments
     } catch (error) {
         console.log(error);
@@ -34,7 +34,16 @@ async function myAssignments(){
     }
 }
 
-//Show 
+// //Show 
+// async function show(id) {
+//     try {
+//         const response = await axios.get(`${BASE_URL}/assignment/${id}`, getAuthHeader());
+//         return response.data.assignment;
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+//show 
 async function getAssignmentForClass(classId, assignmentId) {
   try {
     const token = localStorage.getItem("token");
