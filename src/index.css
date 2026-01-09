@@ -36,3 +36,12 @@
   animation: float 8s ease-in-out infinite;
   animation-delay: 2s;
 }
+
+@keyframes slide-infinite {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+.animate-slide-infinite {
+  animation: slide-infinite 8s linear infinite;
+}
