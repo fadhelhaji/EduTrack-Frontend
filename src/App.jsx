@@ -36,7 +36,7 @@ function App() {
             <Sidebar />
           </aside>
         )}
-        <main className="flex-1">
+        <main className="flex-1 overflow-y-auto">
           <div className="p-6 md:p-10 max-w-400 mx-auto">
             <Routes>
               <Route path="/" element={user ? <Home /> : <Landing />} />

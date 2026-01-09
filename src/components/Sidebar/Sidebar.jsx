@@ -32,7 +32,7 @@ const Sidebar = () => {
       ]
     : [
         { name: "Dashboard", path: "/", icon: <LayoutDashboard size={20} /> },
-        { name: "Available Work", path: "/assignment", icon: <BookOpen size={20} /> },
+        { name: "Available Work", path: "/submissions", icon: <BookOpen size={20} /> },
         { name: "Submit Work", path: "/submissions/new", icon: <UploadCloud size={20} /> },
         { name: "My Progress", path: "/my-submissions", icon: <BarChart3 size={20} /> },
       ];

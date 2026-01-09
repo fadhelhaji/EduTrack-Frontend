@@ -43,13 +43,19 @@ async function createAssignment(classId, assignment) {
 
 
 
-//Index
+//Index // pass token to get instructor id 
 async function index() {
   try {
-    const response = await axios.get(`${BASE_URL}/class`)
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/class`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+  })
     return response.data.classes
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
