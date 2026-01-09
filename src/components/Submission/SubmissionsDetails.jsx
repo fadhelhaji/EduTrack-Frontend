@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { deleteSubmission, show } from "../../services/submissionService";
 import { UserContext } from "../Contexts/UserContext";
-import { ArrowLeft, Github, Info, ShieldAlert, Trash2, X, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Github, Info, ShieldAlert, AlertTriangle } from "lucide-react";
 
 function SubmissionDetails() {
   const { id } = useParams();
