@@ -38,7 +38,6 @@ function StudentForm() {
     e.preventDefault();
 
     const test = await authService.update(id, formData);
-    console.log(test)
     navigate(`/auth/students/${id}`);
   }
 

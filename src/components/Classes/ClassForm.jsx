@@ -74,7 +74,6 @@ function ClassForm() {
                 </p>
             </div>
 
-            {/* form  */}
             <form onSubmit={handleSubmit} className="p-10 space-y-6">
                 <div className="space-y-2">
                     
