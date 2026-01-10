@@ -240,7 +240,6 @@ const Home = () => {
           </section>
         </div>
       </div>
-
       <footer className="flex justify-center gap-6 text-[7px] font-black text-[#4c566a] uppercase tracking-[0.4em] opacity-30 pt-4">
         <div className="flex items-center gap-1"><Zap size={10} className="animate-pulse" /> Encryption Active</div>
         <div className="flex items-center gap-1"><Activity size={10} className="text-green-500" /> Server EduTrack Online</div>
