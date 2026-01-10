@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
@@ -47,8 +46,7 @@ function AssignmentForm() {
         async function fetchData() {
             try {
                 const classData = await classService.index();
-                setClasses(classData);
-
+                setClasses(classData || []);
                 if (assignmentId) {
                     let data;
                     if (classId) {
@@ -74,8 +72,7 @@ function AssignmentForm() {
         }
 
         fetchData();
-    }, [assignmentId, classId]);
-
+    }, [assignmentId, id]);
 
 
     function handleChange(e) {
@@ -85,7 +82,8 @@ function AssignmentForm() {
     if (loading) return (
         <div className="min-h-[60vh] flex items-center justify-center">
             <span className="loading loading-ring loading-lg text-[#88c0d0]"></span>
-        </div>)
+        </div>
+    )
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center p-4 animate-in fade-in zoom-in duration-500">
@@ -107,7 +105,6 @@ function AssignmentForm() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-10 space-y-6">
-
                     <div className="space-y-2">
                         <label htmlFor="title" className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
                             <Type size={12} className="text-[#88c0d0]" /> Title

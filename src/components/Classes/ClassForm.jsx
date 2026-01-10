@@ -61,7 +61,7 @@ function ClassForm() {
                     <School size={80} />
                 </div>
                 <button 
-                    onClick={() => navigate('/class')} 
+                    onClick={() => navigate(`/class/${id}`)} 
                     className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                 >
                     <ArrowLeft size={14} /> Back to Class
