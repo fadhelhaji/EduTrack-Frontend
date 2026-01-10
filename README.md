@@ -10,17 +10,18 @@
 <img src="../Pictures/LandingPage/LandingPage2.png" alt="Landing Page Screenshot 2">
 <img src="../Pictures/LandingPage/LandingPage3.png" alt="Landing Page Screenshot 3">
 
+### Sign Up Page
+<img src="../Pictures/Auth/AuthSignUp.png" alt="Sign Up Page">
+
+### Sign In Page
+<img src="../Pictures/Auth/AuthSignIn.png" alt="Sign In Page">
+
 ### Instructor Portal
 <img src="../Pictures/InstructorPortal/InstructorLandingPage.png" alt="Instructor Portal Landing Page">
 
 ### Student Portal
 <img src="../Pictures/StudentPortal/StudentLandingPage.png" alt="Student Portal Landing Page">
 
-### Sign Up Page
-<img src="../Pictures/Auth/AuthSignUp.png" alt="Sign Up Page">
-
-### Sign In Page
-<img src="../Pictures/Auth/AuthSignIn.png" alt="Sign In Page">
 
 ---
 
