@@ -82,7 +82,7 @@ function ClassForm() {
                 <Terminal size={12} className="text-[#88c0d0]"/>
                 Class Name
             </label>
-            <input name='className' id='className' value={formData.className} onChange={handleChange} type="text" placeholder="place the Class Name" className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] placeholder:text-[#4c566a]/30"
+            <input name='className' id='className' value={formData.className} onChange={handleChange} type="text" placeholder="Enter Class Name" className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] placeholder:text-[#4c566a]/30"
                         required/>
                 </div>
 
@@ -90,7 +90,7 @@ function ClassForm() {
                 <div className="space-y-2">
             <label htmlFor="program" className="text-[11px] font-black uppercase text-[#4c566a] ml-1">Program</label>
             <select name="program" value={formData.program} onChange={handleChange} required className="select w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]">
-                <option value="">Select program</option>
+                <option value="">Select Program</option>
                 <option value="SEB">Software Engineering</option>
                 <option value="UI-UX">UI-UX Design</option>
                 <option value="Java">Java</option>
