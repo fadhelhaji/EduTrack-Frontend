@@ -4,6 +4,7 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}`
 const getAuthHeader = () => ({
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
 });
+
 //Create
 async function create(assignment){
     try {
@@ -13,7 +14,7 @@ async function create(assignment){
         console.log(error)
     }
 }
-//Index
+//Index Instructor
 async function index(){
     try {
         const response = await axios.get(`${BASE_URL}/assignment`, getAuthHeader());
@@ -23,26 +24,26 @@ async function index(){
     }
 }
 
-//Index
+//Index Student
 async function myAssignments(){
     try {
-        const token = localStorage.getItem('token')
-        const response = await axios.get(`${BASE_URL}/assignment/my-assignments`,{headers:{Authorization: `Bearer ${token}`}});
+        const response = await axios.get(`${BASE_URL}/assignment/my-assignments`, getAuthHeader());
         return response.data.assignments
     } catch (error) {
         console.log(error);
     }
 }
 
-// //Show 
-// async function show(id) {
-//     try {
-//         const response = await axios.get(`${BASE_URL}/assignment/${id}`, getAuthHeader());
-//         return response.data.assignment;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+//Show 
+async function show(id) {
+    try {
+        const response = await axios.get(`${BASE_URL}/assignment/${id}`, getAuthHeader());
+        return response.data.assignment;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //show 
 async function getAssignmentForClass(classId, assignmentId) {
   try {
@@ -82,6 +83,6 @@ async function remove(id) {
 
 
 export {
-    create, getAssignmentForClass, index, remove, update, myAssignments
+    create, getAssignmentForClass, index, remove, update, myAssignments, show
 };
 

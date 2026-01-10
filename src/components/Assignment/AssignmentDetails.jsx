@@ -1,31 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import * as assignmentService from '../../services/assignmentService';
-import { AlertTriangle, Calendar, Trash2, Edit3, ArrowLeft, Info, CheckCircle } from "lucide-react";
+import * as submissionService from '../../services/submissionService';
+import { 
+  AlertTriangle, Calendar, Trash2, Edit3, ArrowLeft, 
+  Info, CheckCircle } from "lucide-react";
+import { UserContext } from '../Contexts/UserContext';
 
 function AssignmentDetails() {
-  const { classId, assignmentId } = useParams();
+  const { id, classId, assignmentId } = useParams();
+  const actualAssignmentId = id || assignmentId;
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [assignment, setAssignment] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   useEffect(() => {
     async function fetchDetails() {
-      if (!classId || classId === "null" || !assignmentId) {
-      return;
-    }
-      try {
-        const data = await assignmentService.getAssignmentForClass(classId, assignmentId);
+     try {
+        let data;
+        if (classId && assignmentId) {
+          data = await assignmentService.getAssignmentForClass(classId, assignmentId);
+        } else {
+          data = await assignmentService.show(actualAssignmentId);
+        }
         setAssignment(data);
+
+        if (user?.role === "Instructor") {
+          const subs = await submissionService.getSubmissionsByAssignment(actualAssignmentId);
+          setSubmissions(subs || []);
+        }
       } catch (error) {
         console.log("Error loading assignment details:", error);
       } finally {
         setLoading(false);
       }
     }
-    fetchDetails();
-  }, [classId, assignmentId]);
+   if (actualAssignmentId) fetchDetails();
+  }, [classId, assignmentId, user, actualAssignmentId]);
 
   const handleDelete = async () => {
     try {
@@ -45,104 +59,146 @@ function AssignmentDetails() {
   if (!assignment) return <div className="text-center p-20 font-black text-red-400 uppercase">Module Redacted or Not Found</div>;
 
   return (
-  <div className="max-w-4xl mx-auto p-6 space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-      <div className="flex justify-between items-center">
-        <button onClick={() => navigate(-1)} className="btn btn-ghost gap-2 text-[#4c566a] font-black uppercase text-xs tracking-widest">
-            <ArrowLeft size={16} /> Return
-        </button>
-        <div className="flex gap-2">
-            <Link to={`/class/${classId}/assignment/${assignment._id}/edit`}>
-                <button className="btn bg-[#81a1c1] hover:bg-[#5e81ac] text-white border-none rounded-xl btn-sm h-10 px-4">
-                    <Edit3 size={16} /> Edit Assignment
-                </button>
-            </Link>
-            <button 
-              onClick={() => setIsDeleteOpen(true)} 
-              className="btn bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border-none rounded-xl btn-sm h-10 px-4"
-            >
-                <Trash2 size={16} /> Delete Assignment
-            </button>
+    <div className="max-w-6xl mx-auto p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#d8dee9] pb-8">
+        <div className="space-y-4">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[#81a1c1] font-black text-[10px] uppercase tracking-widest hover:text-[#5e81ac] transition-colors">
+            <ArrowLeft size={14} /> Back to Dashboard
+          </button>
+          <div className="space-y-1">
+            <h1 className="text-5xl font-black text-[#2e3440] uppercase tracking-tighter leading-none">
+              {assignment.title}
+            </h1>
+            <p className="text-[#88c0d0] font-bold uppercase tracking-[0.2em] text-xs">
+              Class: {assignment.class?.className || "General"}
+            </p>
+          </div>
         </div>
+
+        {user?.role === "Instructor" && (
+          <div className="flex gap-3">
+            <Link to={`/assignment/${actualAssignmentId}/edit`} className="btn bg-white border-[#d8dee9] text-[#4c566a] hover:bg-[#eceff4] rounded-2xl px-6">
+              <Edit3 size={18} /> Edit
+            </Link>
+            <button onClick={() => setIsDeleteOpen(true)} className="btn bg-red-50 border-none text-red-500 hover:bg-red-500 hover:text-white rounded-2xl px-6">
+              <Trash2 size={18} /> Delete
+            </button>
+          </div>
+        )}
       </div>
 
-      
-      <div className="bg-white rounded-[2.5rem] border border-[#d8dee9] shadow-2xl overflow-hidden">
-        <div className="bg-[#2e3440] p-10 text-white flex justify-between items-start">
-            <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#88c0d0] mb-2">Assignment Title</p>
-                <h1 className="text-4xl font-black uppercase tracking-tighter">{assignment.title}</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white p-8 rounded-4xl border border-[#d8dee9] shadow-sm">
+            <h2 className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-[#4c566a] mb-6 opacity-50">
+              <Info size={16} /> Assignment Brief
+            </h2>
+            <p className="text-[#4c566a] leading-relaxed font-medium whitespace-pre-wrap">
+              {assignment.description}
+            </p>
+          </div>
+
+          {user?.role === "Student" ? (
+            <div className="bg-[#2e3440] p-8 rounded-4xl text-white flex items-center justify-between">
+              <div>
+                <h3 className="text-2xl font-black uppercase tracking-tighter">Ready to Submit?</h3>
+                <p className="text-[#81a1c1] text-sm font-bold">Push your GitHub repository for review</p>
+              </div>
+              
+              <Link 
+                to={`/submissions/new?assignmentId=${actualAssignmentId}`} 
+                className="btn bg-[#88c0d0] hover:bg-[#8fbcbb] border-none text-[#2e3440] font-black rounded-2xl px-8"
+              >
+                Open Submission Form
+              </Link>
             </div>
-            <div className="bg-white/10 p-4 rounded-2xl">
-                <CheckCircle className="text-[#a3be8c]" size={32} />
+          ) : (
+            <div className="bg-white p-8 rounded-4xl border border-[#d8dee9]">
+              <h2 className="text-[11px] font-black uppercase tracking-widest text-[#4c566a] mb-6 opacity-50 flex items-center gap-2">
+                <CheckCircle size={16}/> Student Submissions ({submissions.length})
+              </h2>
+              {submissions.length === 0 ? (
+                <p className="text-center py-10 text-[#d8dee9] font-bold italic">No submissions yet.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="table w-full">
+                    <thead>
+                      <tr className="text-[10px] uppercase text-[#4c566a]">
+                        <th>Student</th>
+                        <th>Status</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {submissions.map((sub) => (
+                        <tr key={sub._id} className="hover:bg-[#eceff4]/50 transition-colors">
+                          <td className="font-bold text-[#2e3440]">
+                            {sub.student?.firstName} {sub.student?.lastName}
+                          </td>
+                          <td>
+                            <span className={`badge border-none font-black text-[9px] uppercase px-3 ${
+                              sub.status === 'Graded' ? 'bg-[#a3be8c] text-white' : 'bg-[#ebcb8b] text-[#2e3440]'
+                            }`}>
+                              {sub.status}
+                            </span>
+                          </td>
+                          <td className="font-black text-[#81a1c1]">
+                            {sub.grade !== null ? `${sub.grade}%` : '--'}
+                          </td>
+                          <td>
+                            <Link to={`/submission/${sub._id}`} className="btn btn-ghost btn-xs text-[#88c0d0]">
+                              View / Grade
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
+          )}
         </div>
 
-        <div className="p-10 space-y-10">
-            <div className="flex gap-8 border-b border-[#eceff4] pb-8">
-                <div className="flex items-center gap-3">
-                    <Calendar className="text-[#88c0d0]" size={20} />
-                    <div>
-                        <p className="text-[9px] font-black uppercase text-[#4c566a] opacity-50">Deadline</p>
-                        <p className="font-bold text-[#2e3440]">
-                            {assignment.deadline ? new Date(assignment.deadline).toLocaleDateString(undefined, { dateStyle: 'long' }) : "No deadline"}
-                        </p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Info className="text-[#88c0d0]" size={20} />
-                    <div>
-                        <p className="text-[9px] font-black uppercase text-[#4c566a] opacity-50">Status</p>
-                        <p className="font-bold text-[#a3be8c]">Active Assignment</p>
-                    </div>
-                </div>
+        <div className="space-y-4">
+          <div className="bg-[#eceff4] p-6 rounded-4xl border border-[#d8dee9]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#88c0d0] shadow-sm">
+                <Calendar size={20} />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-[#4c566a] uppercase opacity-50">Submission Deadline</p>
+                <p className="font-black text-[#2e3440]">
+                  {new Date(assignment.deadline).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
             </div>
-
-            <div className="space-y-4">
-                <h3 className="text-[11px] font-black uppercase tracking-widest text-[#4c566a]">Description</h3>
-                <div className="text-lg leading-relaxed text-[#4c566a] bg-[#f8fafc] p-8 rounded-3xl border border-[#eceff4] italic">
-                    {assignment.description}
-                </div>
+            
+            <div className="p-4 bg-white/50 rounded-2xl border border-dashed border-[#d8dee9]">
+              <p className="text-[9px] font-bold text-[#4c566a] uppercase text-center">
+                Assignments are locked for grading 24h after deadline
+              </p>
             </div>
+          </div>
         </div>
       </div>
 
       {isDeleteOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box bg-[#2e3440] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl overflow-hidden relative">
-            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-red-500 opacity-10 blur-3xl"></div>
-            
-            <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+        <div className="modal modal-open bg-[#2e3440]/80 backdrop-blur-sm">
+          <div className="modal-box bg-[#2e3440] text-white rounded-4xl border border-white/10 p-10">
+            <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-20 h-20 bg-red-500/10 rounded-3xl flex items-center justify-center text-red-500 animate-pulse">
                 <AlertTriangle size={40} />
               </div>
-              
-              <div>
-                <h3 className="font-black text-3xl uppercase tracking-tighter text-white mb-2">
-                  Delete Assignment
-                </h3>
-                <p className="text-[#d8dee9] opacity-70 leading-relaxed">
-                  Are you sure you want to delete <span className="text-[#88c0d0] font-bold">{assignment.title}</span>? 
-                  This action is permanent and cannot be reversed.
-                </p>
-              </div>
-
+              <h3 className="font-black text-3xl uppercase tracking-tighter">Delete Assignment?</h3>
+              <p className="text-[#d8dee9] opacity-70">This action is permanent and will delete all student submissions for this assignment.</p>
               <div className="flex w-full gap-4 pt-4">
-                <button 
-                  onClick={() => setIsDeleteOpen(false)}
-                  className="flex-1 btn bg-[#4c566a] hover:bg-[#434c5e] border-none text-white rounded-2xl h-14"
-                >
-                  Abort
-                </button>
-                <button 
-                  onClick={handleDelete}
-                  className="flex-1 btn bg-red-500 hover:bg-red-600 border-none text-white rounded-2xl h-14"
-                >
-                  Confirm Delete
-                </button>
+                <button onClick={() => setIsDeleteOpen(false)} className="flex-1 btn bg-[#4c566a] border-none text-white rounded-2xl">Abort</button>
+                <button onClick={handleDelete} className="flex-1 btn bg-red-500 hover:bg-red-600 border-none text-white rounded-2xl">Confirm</button>
               </div>
             </div>
           </div>
-          <div className="modal-backdrop bg-[#2e3440]/80 backdrop-blur-md" onClick={() => setIsDeleteOpen(false)}></div>
         </div>
       )}
     </div>
