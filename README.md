@@ -6,21 +6,21 @@
 ## 📸 Screenshot / Logo
 
 ### Landing Page
-<img src="../Pictures/LandingPage/LandingPage1.png" alt="Landing Page Screenshot 1">
-<img src="../Pictures/LandingPage/LandingPage2.png" alt="Landing Page Screenshot 2">
-<img src="../Pictures/LandingPage/LandingPage3.png" alt="Landing Page Screenshot 3">
+<img src="/src/assets/Pictures/LandingPage/LandingPage1.png" alt="Landing Page Screenshot 1">
+<img src="/src/assets/Pictures/LandingPage/LandingPage2.png" alt="Landing Page Screenshot 2">
+<img src="/src/assets/Pictures/LandingPage/LandingPage3.png" alt="Landing Page Screenshot 3">
 
 ### Sign Up Page
-<img src="../Pictures/Auth/AuthSignUp.png" alt="Sign Up Page">
+<img src="/src/assets/Pictures/Auth/AuthSignUp.png" alt="Sign Up Page">
 
 ### Sign In Page
-<img src="../Pictures/Auth/AuthSignIn.png" alt="Sign In Page">
+<img src="/src/assets/Pictures/Auth/AuthSignIn.png.png" alt="Sign In Page">
 
 ### Instructor Portal
-<img src="../Pictures/InstructorPortal/InstructorLandingPage.png" alt="Instructor Portal Landing Page">
+<img src="/src/assets/Pictures/InstructorPortal/InstructorLandingPage.png" alt="Instructor Portal Landing Page">
 
 ### Student Portal
-<img src="../Pictures/StudentPortal/StudentLandingPage.png" alt="Student Portal Landing Page">
+<img src="/src/assets/Pictures/StudentPortal/StudentLandingPage.png" alt="Student Portal Landing Page">
 
 
 ---
