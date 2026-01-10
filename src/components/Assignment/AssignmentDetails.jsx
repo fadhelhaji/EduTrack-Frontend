@@ -77,7 +77,7 @@ function AssignmentDetails() {
 
         {user?.role === "Instructor" && (
           <div className="flex gap-3">
-            <Link to={`/assignment/${actualAssignmentId}/edit`} className="btn bg-white border-[#d8dee9] text-[#4c566a] hover:bg-[#eceff4] rounded-2xl px-6">
+            <Link to={`/class/${assignment.class?._id}/assignment/${actualAssignmentId}/edit`} className="btn bg-white border-[#d8dee9] text-[#4c566a] hover:bg-[#eceff4] rounded-2xl px-6">
               <Edit3 size={18} /> Edit
             </Link>
             <button onClick={() => setIsDeleteOpen(true)} className="btn bg-red-50 border-none text-red-500 hover:bg-red-500 hover:text-white rounded-2xl px-6">
