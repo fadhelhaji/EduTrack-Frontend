@@ -43,7 +43,7 @@ function SubmissionForm() {
 
     try {
       await create(submission);
-      navigate("/submissions");
+      navigate("/my-submissions");
     } catch (err) {
       console.error("Error creating submission:", err);
       alert("Failed to submit assignment.");

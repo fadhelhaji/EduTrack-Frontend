@@ -56,4 +56,17 @@ async function deleteSubmission(id) {
   }
 }
 
-export { create, getSubmissions, show, update, deleteSubmission };
+async function getSubmissionsByAssignment(assignmentId) {
+  try {
+    const response = await axios.get(
+    `${BASE_URL}/assignment/${assignmentId}/submissions`, 
+    getAuthHeader()
+        );
+    return response.data;
+  } catch (error) {
+    console.error("Fetch Assignment Submissions Error:", error);
+    throw error;
+  }
+}
+
+export { create, getSubmissions, show, update, deleteSubmission, getSubmissionsByAssignment};
