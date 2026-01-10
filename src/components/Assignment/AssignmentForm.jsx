@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
@@ -10,7 +9,6 @@ import { FilePlus, Calendar, Type, AlignLeft, Layout, Save, ArrowLeft } from "lu
 function AssignmentForm() {
     const navigate = useNavigate()
     const { id, assignmentId } = useParams();
-    const classId = id;
     const [classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [assignment, setAssignment] = useState({
@@ -23,6 +21,7 @@ function AssignmentForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         const finalClassId = id || assignment.class;
+        
         if (!finalClassId) {
             toast.error("Please select a class");
             return;
@@ -39,7 +38,7 @@ function AssignmentForm() {
                 navigate(`/class/${finalClassId}`);
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
             toast.error("Something went wrong");
         }
     }
@@ -48,45 +47,43 @@ function AssignmentForm() {
         async function fetchData() {
             try {
                 const classData = await classService.index();
-                setClasses(classData);
-
+                setClasses(classData || []);
                 if (assignmentId) {
-                    const data = await assignmentService.getAssignmentForClass(classId, assignmentId);
-                    setAssignment({
-                        title: data.title,
-                        description: data.description,
-                        deadline: data.deadline ? data.deadline.split('T')[0] : '',
-                        class: data.class
-                    });
-                    
-                }
-                else if (classId) {
+                    const data = await assignmentService.show(assignmentId);
+                    if (data) {
+                        setAssignment({
+                            title: data.title || '',
+                            description: data.description || '',
+                            deadline: data.deadline ? new Date(data.deadline).toISOString().split('T')[0] : '',
+                            class: data.class?._id || data.class || id || ''
+                        });} } 
+                else if (id) {
                     setAssignment(prev => ({
                         ...prev,
-                        class: classId
+                        class: id
                     }));
                 }
             } catch (err) {
-                console.log(err);
+                console.error(err);
             } finally {
                 setLoading(false);
             }
         }
 
         fetchData();
-    }, [assignmentId, classId]);
-
+    }, [assignmentId, id]);
 
     function handleChange(e) {
         setAssignment({ ...assignment, [e.target.name]: e.target.value })
     }
 
     if (loading) return (
-            <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="min-h-[60vh] flex items-center justify-center">
             <span className="loading loading-ring loading-lg text-[#88c0d0]"></span>
-        </div>)
+        </div>
+    )
 
-return (
+    return (
         <div className="min-h-[80vh] flex items-center justify-center p-4 animate-in fade-in zoom-in duration-500">
             <div className="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-[#d8dee9]">
                 
@@ -95,7 +92,7 @@ return (
                         <FilePlus size={80} />
                     </div>
                     <button 
-                        onClick={() => navigate('/assignment')} 
+                        onClick={() => navigate(-1)} 
                         className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                     >
                         <ArrowLeft size={14} /> Back
@@ -106,7 +103,6 @@ return (
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-10 space-y-6">
-                    
                     <div className="space-y-2">
                         <label htmlFor="title" className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
                             <Type size={12} className="text-[#88c0d0]" /> Title
@@ -118,7 +114,7 @@ return (
                             id='title' 
                             type="text" 
                             className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]"
-                            placeholder="Place your Assignment title here" 
+                            placeholder="Assignment title" 
                             required
                         />
                     </div>
@@ -132,8 +128,8 @@ return (
                             onChange={handleChange} 
                             name='description' 
                             id='description' 
-                            className="textarea w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] min-h-37.5 pt-4" 
-                            placeholder="Detail the requirements..." 
+                            className="textarea w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] min-h-32 pt-4" 
+                            placeholder="Assignment requirements" 
                             required
                         />
                     </div>
@@ -162,7 +158,7 @@ return (
                                 name="class" 
                                 value={assignment.class} 
                                 onChange={handleChange} 
-                                disabled={!!classId}
+                                disabled={!!id}
                                 className="select w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]"
                             >
                                 <option value="">Select a Class</option>
