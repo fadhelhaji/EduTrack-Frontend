@@ -88,8 +88,8 @@ EduTrack centralizes the entire academic workflow into one platform, offering:
 
 - 🧠 **Planning Materials:**  
 
-- ⚙️ **Front-End Repository:**  
-https://github.com/fadhelhaji/EduTrack-Frontend
+- ⚙️ **Back-End Repository:**
+https://github.com/fadhelhaji/EduTrack-Backend
 
 ---
 
