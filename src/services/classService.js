@@ -4,13 +4,13 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}`
 //Create
 async function create(formData) {
   try {
-    const token = localStorage.getItem("token"); // get JWT from localStorage
+    const token = localStorage.getItem("token");
     const response = await axios.post(
       `${BASE_URL}/class/new`,
       formData,
       {
         headers: {
-          Authorization: `Bearer ${token}`  // <-- send token in header
+          Authorization: `Bearer ${token}`
         }
       }
     );
@@ -137,7 +137,6 @@ async function removeStudent(classId, studentId) {
 }
 
 //show assignment by class Id
-// classService.js
 async function getAssignmentForClass(classId, assignmentId) {
   try {
     const token = localStorage.getItem("token");
@@ -149,7 +148,7 @@ async function getAssignmentForClass(classId, assignmentId) {
         }
       }
     );
-    return response.data.assignment; // <-- return assignment directly
+    return response.data.assignment;
   } catch (error) {
     console.log(error);
   }

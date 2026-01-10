@@ -5,9 +5,7 @@ import { UserContext } from "../../Contexts/UserContext";
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
   const { setUser } = useContext(UserContext);
-
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -16,6 +14,7 @@ function SignUpForm() {
     confirmPassword: "",
     role: "",
     employeeId: "",
+    email: ""
   });
 
   function handleChange(event) {
@@ -120,6 +119,22 @@ function SignUpForm() {
                   onChange={handleChange}
                   type="text"
                   placeholder="Username"
+                  className="input input-bordered input-sm h-10 w-full bg-[#f8fafc] border-[#d8dee9] rounded-xl text-xs"
+                  required
+                />
+              </div>
+
+              <div className="form-control md:col-span-2">
+                <label className="label py-0" htmlFor="email">
+                  <span className="label-text font-black text-[#81a1c1] uppercase tracking-widest text-[9px]">Email</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Email"
                   className="input input-bordered input-sm h-10 w-full bg-[#f8fafc] border-[#d8dee9] rounded-xl text-xs"
                   required
                 />

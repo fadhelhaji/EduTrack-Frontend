@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { deleteSubmission, getSubmissions } from "../../services/submissionService";
 import { UserContext } from "../Contexts/UserContext";
-import { List, User, Eye, Trash2, Plus, AlertTriangle } from "lucide-react";
+import { List, User, Eye, Trash2, Plus, AlertTriangle, Album } from "lucide-react";
 
 function SubmissionList() {
   const { user } = useContext(UserContext);
@@ -11,46 +11,51 @@ function SubmissionList() {
   const [error, setError] = useState("");
   const [deleteTarget, setDeleteTarget] = useState(null);
 
+
   useEffect(() => {
     async function fetchSubmissions() {
       try {
         let data = await getSubmissions();
-
         if (user?.role === "Student") {
           data = data.filter((s) => s.student?._id === user._id);
+        } else if (user?.role === "Instructor") {
+          data = data.filter(
+            (s) =>
+              s.class?.instructor?._id === user._id &&
+              s.assignment?.instructor?._id === user._id
+          );
         }
-
-        setSubmissions(data || []);
-      } catch (err) {
-        console.error("Error fetching submissions:", err);
+        setSubmissions(data);
+      } catch (error) {
+        console.log(error);
         setError("Failed to load submissions.");
       } finally {
         setLoading(false);
       }
     }
-
     if (user) fetchSubmissions();
   }, [user]);
+
 
   const handleDelete = async (id) => {
     if (!deleteTarget) return;
     try {
       await deleteSubmission(id);
       setSubmissions(submissions.filter((s) => s._id !== id));
-    setDeleteTarget(null);
+      setDeleteTarget(null);
     }
-     catch (err) {
+    catch (err) {
       console.error("Failed to delete submission:", err);
       alert("Failed to delete submission.");
     }
   };
 
-if (loading) return 
-<div className="flex justify-center p-20">
-<span className="loading loading-bars text-[#88c0d0]"></span></div>;
-  
-return (
-      <div className="min-h-[80vh] flex flex-col items-center p-4">
+  if (loading) return
+  <div className="flex justify-center p-20">
+    <span className="loading loading-bars text-[#88c0d0]"></span></div>;
+
+  return (
+    <div className="min-h-[80vh] flex flex-col items-center p-4">
       <div className="w-full max-w-5xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
@@ -88,15 +93,35 @@ return (
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#eceff4] group-hover:bg-white/10 flex items-center justify-center text-[#81a1c1]">
-                    <User size={20} />
+                {user.role === "Instructor" && (
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#eceff4] group-hover:bg-white/10 flex items-center justify-center text-[#81a1c1]">
+                        <User size={20} />
+                      </div>
+                      <div>
+                        <p className="text-[9px] font-black text-[#81a1c1] uppercase tracking-[0.2em]">Student</p>
+                        <p className="font-medium text-[#4c566a] group-hover:text-white/70 text-sm">
+                          {s.student?.username || s.student?._id}
+                        </p>
+                      </div>
+                    </div>
+
+                    {s.class && (
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-[#eceff4] group-hover:bg-white/10 flex items-center justify-center text-[#81a1c1]">
+                          <Album size={20} />
+                        </div>
+                        <div className="flex flex-col items-start">
+                          <p className="text-[9px] font-black text-[#81a1c1] uppercase tracking-[0.2em]">Class</p>
+                          <p className="font-medium text-[#4c566a] group-hover:text-white/70 text-sm text-center">
+                            {s.class?.className || s.class?._id}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <p className="text-[9px] font-black text-[#81a1c1] uppercase tracking-[0.2em]">Student</p>
-                    <p className="font-medium text-[#4c566a] group-hover:text-white/70 text-sm">{s.student?.username || s.student?._id}</p>
-                  </div>
-                </div>
+                )}
 
                 <div className="flex items-center gap-3 ml-auto">
                   <Link to={`/submission/${s._id}`} className="btn btn-sm rounded-xl bg-[#eceff4] group-hover:bg-white/10 border-none group-hover:text-white text-[#2e3440] font-black uppercase text-[10px] tracking-widest px-4">
