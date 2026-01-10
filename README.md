@@ -14,7 +14,7 @@
 <img src="/src/assets/Pictures/Auth/AuthSignUp.png" alt="Sign Up Page">
 
 ### Sign In Page
-<img src="/src/assets/Pictures/Auth/AuthSignIn.png.png" alt="Sign In Page">
+<img src="/src/assets/Pictures/Auth/AuthSignIn.png" alt="Sign In Page">
 
 ### Instructor Portal
 <img src="/src/assets/Pictures/InstructorPortal/InstructorLandingPage.png" alt="Instructor Portal Landing Page">
