@@ -14,7 +14,6 @@ async function create(formData) {
         }
       }
     );
-    console.log(response.data.class);
     return response.data.class;
   } catch (error) {
     console.log(error);
@@ -51,7 +50,7 @@ async function index() {
       headers: {
         Authorization: `Bearer ${token}`
       }
-  })
+    })
     return response.data.classes
   } catch (error) {
     console.log(error);
@@ -70,7 +69,6 @@ async function show(id) {
         }
       }
     );
-    console.log(response)
     return response.data
   } catch (error) {
     console.log(error);
@@ -80,7 +78,14 @@ async function show(id) {
 //Update
 async function update(id, formData) {
   try {
-    const response = await axios.put(`${BASE_URL}/class/${id}/edit`, formData);
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`${BASE_URL}/class/${id}/edit`, formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
     return response.data.class;
   } catch (error) {
     console.log(error);
@@ -90,7 +95,14 @@ async function update(id, formData) {
 //Delete
 async function remove(id) {
   try {
-    const response = await axios.delete(`${BASE_URL}/class/${id}`);
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(`${BASE_URL}/class/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
     return response.data.class;
   } catch (error) {
     console.log(error);
@@ -100,7 +112,14 @@ async function remove(id) {
 //get allavailable students
 async function getAllStudents() {
   try {
-    const response = await axios.get(`${BASE_URL}/students/all`);
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/students/all`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
     return response.data.students;
   } catch (error) {
     console.log(error);

@@ -8,7 +8,6 @@ function StudentList() {
     async function fetchStudents(){
         try {
             const data = await authService.index()
-            console.log(data)
             setStudent(data.students)      
         } catch (error) {
             console.log(error)

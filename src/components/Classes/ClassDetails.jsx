@@ -41,7 +41,6 @@ function ClassDetails() {
     setLoading(false)
   }
 }
-console.log("Class Students:", classStudents);
 
 
 

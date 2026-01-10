@@ -79,7 +79,6 @@ function AssignmentForm() {
 
     function handleChange(e) {
         setAssignment({ ...assignment, [e.target.name]: e.target.value })
-        console.log(assignment)
     }
 
     if (loading) return (
