@@ -2,9 +2,10 @@ import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import * as assignmentService from '../../services/assignmentService';
 import * as submissionService from '../../services/submissionService';
-import { 
-  AlertTriangle, Calendar, Trash2, Edit3, ArrowLeft, 
-  Info, CheckCircle } from "lucide-react";
+import {
+  AlertTriangle, Calendar, Trash2, Edit3, ArrowLeft,
+  Info, CheckCircle
+} from "lucide-react";
 import { UserContext } from '../Contexts/UserContext';
 
 function AssignmentDetails() {
@@ -19,7 +20,7 @@ function AssignmentDetails() {
 
   useEffect(() => {
     async function fetchDetails() {
-     try {
+      try {
         let data;
         if (classId && assignmentId) {
           data = await assignmentService.getAssignmentForClass(classId, assignmentId);
@@ -38,7 +39,7 @@ function AssignmentDetails() {
         setLoading(false);
       }
     }
-   if (actualAssignmentId) fetchDetails();
+    if (actualAssignmentId) fetchDetails();
   }, [classId, assignmentId, user, actualAssignmentId]);
 
   const handleDelete = async () => {
@@ -52,10 +53,10 @@ function AssignmentDetails() {
 
   if (loading) return (
     <div className="min-h-[60vh] flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-[#88c0d0]"></span>
+      <span className="loading loading-spinner loading-lg text-[#88c0d0]"></span>
     </div>
   );
-  
+
   if (!assignment) return <div className="text-center p-20 font-black text-red-400 uppercase">Module Redacted or Not Found</div>;
 
   return (
@@ -77,9 +78,13 @@ function AssignmentDetails() {
 
         {user?.role === "Instructor" && (
           <div className="flex gap-3">
-            <Link to={`/assignment/${actualAssignmentId}/edit`} className="btn bg-white border-[#d8dee9] text-[#4c566a] hover:bg-[#eceff4] rounded-2xl px-6">
+            <Link
+              to={`/class/${assignment.class?._id || assignment.class}/assignment/${assignment._id}/edit`}
+              className="btn bg-white border-[#d8dee9] text-[#4c566a] hover:bg-[#eceff4] rounded-2xl px-6"
+            >
               <Edit3 size={18} /> Edit
             </Link>
+
             <button onClick={() => setIsDeleteOpen(true)} className="btn bg-red-50 border-none text-red-500 hover:bg-red-500 hover:text-white rounded-2xl px-6">
               <Trash2 size={18} /> Delete
             </button>
@@ -104,9 +109,9 @@ function AssignmentDetails() {
                 <h3 className="text-2xl font-black uppercase tracking-tighter">Ready to Submit?</h3>
                 <p className="text-[#81a1c1] text-sm font-bold">Push your GitHub repository for review</p>
               </div>
-              
-              <Link 
-                to={`/submissions/new?assignmentId=${actualAssignmentId}`} 
+
+              <Link
+                to={`/submissions/new?assignmentId=${actualAssignmentId}`}
                 className="btn bg-[#88c0d0] hover:bg-[#8fbcbb] border-none text-[#2e3440] font-black rounded-2xl px-8"
               >
                 Open Submission Form
@@ -115,7 +120,7 @@ function AssignmentDetails() {
           ) : (
             <div className="bg-white p-8 rounded-4xl border border-[#d8dee9]">
               <h2 className="text-[11px] font-black uppercase tracking-widest text-[#4c566a] mb-6 opacity-50 flex items-center gap-2">
-                <CheckCircle size={16}/> Student Submissions ({submissions.length})
+                <CheckCircle size={16} /> Student Submissions ({submissions.length})
               </h2>
               {submissions.length === 0 ? (
                 <p className="text-center py-10 text-[#d8dee9] font-bold italic">No submissions yet.</p>
@@ -137,9 +142,8 @@ function AssignmentDetails() {
                             {sub.student?.firstName} {sub.student?.lastName}
                           </td>
                           <td>
-                            <span className={`badge border-none font-black text-[9px] uppercase px-3 ${
-                              sub.status === 'Graded' ? 'bg-[#a3be8c] text-white' : 'bg-[#ebcb8b] text-[#2e3440]'
-                            }`}>
+                            <span className={`badge border-none font-black text-[9px] uppercase px-3 ${sub.status === 'Graded' ? 'bg-[#a3be8c] text-white' : 'bg-[#ebcb8b] text-[#2e3440]'
+                              }`}>
                               {sub.status}
                             </span>
                           </td>
@@ -174,7 +178,7 @@ function AssignmentDetails() {
                 </p>
               </div>
             </div>
-            
+
             <div className="p-4 bg-white/50 rounded-2xl border border-dashed border-[#d8dee9]">
               <p className="text-[9px] font-bold text-[#4c566a] uppercase text-center">
                 Assignments are locked for grading 24h after deadline

@@ -22,24 +22,23 @@ function AssignmentForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const finalClassId = id || assignment.class;
+        const finalClassId = classId || assignment.class;
         if (!finalClassId) {
             toast.error("Please select a class");
             return;
         }
-
         try {
             if (assignmentId) {
-                await assignmentService.update(assignmentId, assignment);
+                await assignmentService.update(assignmentId, { ...assignment, class: finalClassId });
                 toast.success("Assignment updated successfully!");
                 navigate(`/class/${finalClassId}`);
             } else {
-                await classService.createAssignment(finalClassId, assignment);
+                await classService.createAssignment(finalClassId, { ...assignment, class: finalClassId });
                 toast.success("Assignment created successfully!");
                 navigate(`/class/${finalClassId}`);
             }
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.error(error);
             toast.error("Something went wrong");
         }
     }
@@ -51,23 +50,24 @@ function AssignmentForm() {
                 setClasses(classData);
 
                 if (assignmentId) {
-                    const data = await assignmentService.getAssignmentForClass(classId, assignmentId);
+                    let data;
+                    if (classId) {
+                        data = await classService.getAssignmentForClass(classId, assignmentId);
+                    } else {
+                        data = await assignmentService.show(assignmentId);
+                    }
+                    const classValue = data.class?._id || data.class;
                     setAssignment({
-                        title: data.title,
-                        description: data.description,
-                        deadline: data.deadline ? data.deadline.split('T')[0] : '',
-                        class: data.class
+                        title: data.title || '',
+                        description: data.description || '',
+                        deadline: data.deadline ? data.deadline.split("T")[0] : '',
+                        class: classValue || ''
                     });
-                    
+                } else if (classId) {
+                    setAssignment(prev => ({ ...prev, class: classId }));
                 }
-                else if (classId) {
-                    setAssignment(prev => ({
-                        ...prev,
-                        class: classId
-                    }));
-                }
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log(error);
             } finally {
                 setLoading(false);
             }
@@ -77,25 +77,26 @@ function AssignmentForm() {
     }, [assignmentId, classId]);
 
 
+
     function handleChange(e) {
         setAssignment({ ...assignment, [e.target.name]: e.target.value })
     }
 
     if (loading) return (
-            <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="min-h-[60vh] flex items-center justify-center">
             <span className="loading loading-ring loading-lg text-[#88c0d0]"></span>
         </div>)
 
-return (
+    return (
         <div className="min-h-[80vh] flex items-center justify-center p-4 animate-in fade-in zoom-in duration-500">
             <div className="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-[#d8dee9]">
-                
+
                 <div className="bg-[#3b4252] p-8 text-white relative">
                     <div className="absolute top-0 right-0 p-8 opacity-10">
                         <FilePlus size={80} />
                     </div>
-                    <button 
-                        onClick={() => navigate('/assignment')} 
+                    <button
+                        onClick={() => navigate('/assignment')}
                         className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                     >
                         <ArrowLeft size={14} /> Back
@@ -106,19 +107,19 @@ return (
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-10 space-y-6">
-                    
+
                     <div className="space-y-2">
                         <label htmlFor="title" className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
                             <Type size={12} className="text-[#88c0d0]" /> Title
                         </label>
-                        <input 
-                            value={assignment.title} 
-                            onChange={handleChange} 
-                            name='title' 
-                            id='title' 
-                            type="text" 
+                        <input
+                            value={assignment.title}
+                            onChange={handleChange}
+                            name='title'
+                            id='title'
+                            type="text"
                             className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]"
-                            placeholder="Place your Assignment title here" 
+                            placeholder="Place your Assignment title here"
                             required
                         />
                     </div>
@@ -127,13 +128,13 @@ return (
                         <label htmlFor="description" className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
                             <AlignLeft size={12} className="text-[#88c0d0]" /> Description
                         </label>
-                        <textarea 
-                            value={assignment.description} 
-                            onChange={handleChange} 
-                            name='description' 
-                            id='description' 
-                            className="textarea w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] min-h-37.5 pt-4" 
-                            placeholder="Detail the requirements..." 
+                        <textarea
+                            value={assignment.description}
+                            onChange={handleChange}
+                            name='description'
+                            id='description'
+                            className="textarea w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440] min-h-37.5 pt-4"
+                            placeholder="Detail the requirements..."
                             required
                         />
                     </div>
@@ -141,15 +142,15 @@ return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label htmlFor="deadline" className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
-                                <Calendar size={12} className="text-[#88c0d0]"/> Deadline
+                                <Calendar size={12} className="text-[#88c0d0]" /> Deadline
                             </label>
-                            <input 
-                                value={assignment.deadline} 
-                                onChange={handleChange} 
-                                name='deadline' 
-                                id='deadline' 
-                                type="date" 
-                                className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]" 
+                            <input
+                                value={assignment.deadline}
+                                onChange={handleChange}
+                                name='deadline'
+                                id='deadline'
+                                type="date"
+                                className="input w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]"
                                 required
                             />
                         </div>
@@ -158,11 +159,11 @@ return (
                             <label className="flex items-center gap-2 text-[11px] font-black uppercase text-[#4c566a] ml-1">
                                 <Layout size={12} className="text-[#88c0d0]" /> Assigned Class
                             </label>
-                            <select 
-                                name="class" 
-                                value={assignment.class} 
-                                onChange={handleChange} 
-                                disabled={!!classId}
+                            <select
+                                name="class"
+                                value={assignment.class}
+                                onChange={handleChange}
+                                disabled={!!classId} // disable if URL has classId
                                 className="select w-full bg-[#eceff4] border-none rounded-2xl focus:ring-2 focus:ring-[#88c0d0] font-bold text-[#2e3440]"
                             >
                                 <option value="">Select a Class</option>
@@ -170,11 +171,12 @@ return (
                                     <option value={one._id} key={one._id}>{one.className}</option>
                                 ))}
                             </select>
+
                         </div>
                     </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="btn w-full bg-[#2e3440] hover:bg-[#3b4252] text-white border-none rounded-2xl h-14 flex items-center justify-center gap-3 mt-4 transition-all active:scale-95 shadow-xl"
                     >
                         <Save size={18} className="text-[#88c0d0]" />
