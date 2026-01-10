@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { UserContext } from './components/Contexts/UserContext';
 import Navbar from './components/Navbar/Navbar';
@@ -26,18 +26,23 @@ import SubmissionDetails from "./components/Submission/SubmissionsDetails";
 
 function App() {
   const { user } = useContext(UserContext);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
- <div className="min-h-screen bg-[#eceff4] flex flex-col">
-      <Navbar />
+<div className="min-h-screen bg-[#eceff4] flex flex-col">
+      <div className="bg-white border-b border-[#d8dee9]">
+        <Navbar />
+      </div>
+      
       <div className="flex flex-1">
         {user && (
-          <aside className="w-64 shrink-0 border-r border-[#d8dee9] bg-[#2e3440]">
-            <Sidebar />
+          <aside className={`hidden md:block shrink-0 transition-all duration-300 bg-[#2e3440] ${isCollapsed ? "w-20" : "w-64"}`}>
+            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           </aside>
         )}
-        <main className="flex-1 overflow-y-auto">
-          <div className="p-6 md:p-10 max-w-400 mx-auto">
+
+        <main className="flex-1 bg-[#eceff4]">
+          <div className="p-6 md:p-10 max-w-7xl mx-auto">
             <Routes>
               <Route path="/" element={user ? <Home /> : <Landing />} />
               <Route path="/auth/sign-up" element={<SignUpForm />} />
@@ -45,8 +50,6 @@ function App() {
 
               {user && (
                 <>
-                  <Route path="/submissions" element={<SubmissionList user={user} />} />
-                  <Route path="/submissions/new" element={<SubmissionForm />} />
                   <Route path="/submission/:id" element={<SubmissionDetails />} />
                   <Route path="/profile" element={<Profile />} />
                 </>
@@ -55,7 +58,8 @@ function App() {
               {user?.role === "Student" && (
                 <>
                   <Route path="/my-submissions" element={<MySubmissions />} />
-                  <Route path="/assignment" element={<AssignmentList />} />
+                  <Route path="/submissions/new" element={<SubmissionForm />} />
+                  <Route path="/my-assignment" element={<AssignmentList />} />
                   <Route path="/assignment/:id" element={<AssignmentDetails />} />
                 </>
               )}
@@ -71,18 +75,16 @@ function App() {
                   <Route path="/class/:id/assignment/new" element={<AssignmentForm />} />
                   <Route path="/class/:id/assignment/:assignmentId/edit" element={<AssignmentForm />} />
                   <Route path="/class/:classId/assignment/:assignmentId" element={<AssignmentDetails />} />
+                  <Route path="/submissions" element={<SubmissionList user={user} />} />
                 </>
               )}
 
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
+          {!user && <Footbar />}
         </main>
       </div>
-
-      {!user && (
-        <Footbar />
-      )}
 
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </div>
