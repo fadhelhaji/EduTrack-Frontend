@@ -89,6 +89,7 @@ N/A
 
 - 🧠 **Planning Materials:**
 ERD: <img src ="src/assets/Pictures/ProjectPlan/ERD.jpeg" alt="Project ERD">
+
 Initial App Flow: <img src="src/assets/Pictures/ProjectPlan/InitialWebFlow.png" alt="Page Flow">
 
 - ⚙️ **Back-End Repository:**
