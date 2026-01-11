@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import * as classService from '../../services/classService'
-import { School, Save, ArrowLeft, Terminal } from "lucide-react";
+import { ArrowLeft, Save, School, Terminal } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import * as classService from '../../services/classService';
 
 function ClassForm() {
     const {id} = useParams()
@@ -61,7 +61,7 @@ function ClassForm() {
                     <School size={80} />
                 </div>
                 <button 
-                    onClick={() => navigate(`/class/${id}`)} 
+                    onClick={() => navigate(`/class`)} 
                     className="flex items-center gap-2 text-[#88c0d0] text-xs font-black uppercase tracking-widest mb-4 hover:text-white transition-colors"
                 >
                     <ArrowLeft size={14} /> Back to Class
