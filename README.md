@@ -88,6 +88,7 @@ EduTrack centralizes the entire academic workflow into one platform, offering:
 N/A
 
 - 🧠 **Planning Materials:**
+
 ERD: <img src ="src/assets/Pictures/ProjectPlan/ERD.jpeg" alt="Project ERD">
 
 Initial App Flow: <img src="src/assets/Pictures/ProjectPlan/InitialWebFlow.png" alt="Page Flow">
