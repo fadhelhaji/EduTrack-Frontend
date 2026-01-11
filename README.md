@@ -17,10 +17,10 @@
 <img src="/src/assets/Pictures/Auth/AuthSignIn.png" alt="Sign In Page">
 
 ### Instructor Portal
-<img src="/src/assets/Pictures/InstructorPortal/InstructorLandingPage.png" alt="Instructor Portal Landing Page">
+<img src="/src/assets/Pictures/InstructorPortal/InstructorLandingDashboard.png" alt="Instructor Portal Landing Page">
 
 ### Student Portal
-<img src="/src/assets/Pictures/StudentPortal/StudentLandingPage.png" alt="Student Portal Landing Page">
+<img src="/src/assets/Pictures/StudentPortal/StudentDashboard.png" alt="Student Portal Landing Page">
 
 
 ---
@@ -85,8 +85,11 @@ EduTrack centralizes the entire academic workflow into one platform, offering:
 ## 🚀 Getting Started
 
 - 🌐 **Live App:**  
+N/A
 
-- 🧠 **Planning Materials:**  
+- 🧠 **Planning Materials:**
+ERD: <img src ="src/assets/Pictures/ProjectPlan/ERD.jpeg" alt="Project ERD">
+Initial App Flow: <img src="src/assets/Pictures/ProjectPlan/InitialWebFlow.png" alt="Page Flow">
 
 - ⚙️ **Back-End Repository:**
 https://github.com/fadhelhaji/EduTrack-Backend
